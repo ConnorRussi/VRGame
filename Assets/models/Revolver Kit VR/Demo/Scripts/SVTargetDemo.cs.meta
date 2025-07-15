@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: e3fbb1efbee33d14db4f9fdd591a5c56
+timeCreated: 1508612645
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 103118
+  packageName: Revolver Kit VR - No code needed!
+  packageVersion: 1.0
+  assetPath: Assets/Revolver Kit VR/Demo/Scripts/SVTargetDemo.cs
+  uploadId: 211042

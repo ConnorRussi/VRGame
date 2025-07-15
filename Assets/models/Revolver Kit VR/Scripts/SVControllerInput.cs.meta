@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 3e1fac497812cef48898a4cf14eb3c28
+timeCreated: 1507998513
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 103118
+  packageName: Revolver Kit VR - No code needed!
+  packageVersion: 1.0
+  assetPath: Assets/Revolver Kit VR/Scripts/SVControllerInput.cs
+  uploadId: 211042
