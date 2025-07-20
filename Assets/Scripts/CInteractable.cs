@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CInteractable : MonoBehaviour
 {
     public GameObject mesh;
-    public ParticleSystem breakParticles, smokeParticles, drinkParticles;
+    public ParticleSystem breakParticles, smokeParticles, drinkParticles, collisionParticles;
     Rigidbody rb;
     AudioSource audioSource;
     public AudioClip dropSound, breakSound;
@@ -35,6 +35,8 @@ public class CInteractable : MonoBehaviour
         if (drinkParticles != null)
         {
             drinkEmission = drinkParticles.emission;
+            
+            
         }
     }
     public void FixedUpdate()
@@ -51,16 +53,31 @@ public class CInteractable : MonoBehaviour
 
             var emission = drinkParticles.emission; // Get a fresh copy each time
 
+            // === HIGHLIGHT: Add collisionParticles emission handling ===
+            ParticleSystem.EmissionModule collisionEmission = default;
+            if (collisionParticles != null)
+                collisionEmission = collisionParticles.emission;
+            // === END HIGHLIGHT ===
+
             if (angle < 90f)
             {
                 emission.rateOverTime = 0f;
                 //drinkParticles.Stop();
+
+                // === HIGHLIGHT: Stop collisionParticles emission ===
+                if (collisionParticles != null)
+                    collisionEmission.rateOverTime = 0f;
+                // === END HIGHLIGHT ===
             }
             else
             {
-            float t = Mathf.InverseLerp(90f, 180f, angle);
+                float t = Mathf.InverseLerp(90f, 180f, angle);
                 emission.rateOverTime = t * maxDrinkEmissionRate;
                 //drinkParticles.Play();
+
+                // === HIGHLIGHT: Set collisionParticles emission (slower, more direct) ===
+                if (collisionParticles != null)
+                    collisionEmission.rateOverTime = t * (maxDrinkEmissionRate * 0.5f); // Example: half the rate
             }
         }
     }

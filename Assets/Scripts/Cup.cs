@@ -23,7 +23,7 @@ public class Cup : MonoBehaviour
         }
         defaulXScale = drink.transform.localScale.x;
         defaulZScale = drink.transform.localScale.z;
-        drink.transform.localScale = new Vector3(0, currDrinkHeight, 0);
+        drink.transform.localScale = new Vector3(defaulXScale, currDrinkHeight, defaulZScale);
         IceChange(ice);
         MintChange(mint);
         LemonChange(lemon);
@@ -39,6 +39,8 @@ public class Cup : MonoBehaviour
     }
     public void FillCup(Color color)
     {
+        //Debug.Log("Filling cup with color: " + color);
+        //Debug.Log("Old color: " + this.color);
         ChangeColor(color);
         currDrinkHeight += drinkHeightIncrement;
         currDrinkHeight = Mathf.Min(currDrinkHeight, maxDrinkHeight); // Ensure we don't exceed the maximum height
@@ -47,7 +49,8 @@ public class Cup : MonoBehaviour
     }
     void ChangeColor(Color color)
     {
-        color.a = this.color.a; // Preserve the alpha value
+        //Debug.Log("Changing drink color to: " + color);
+        //color.a = this.color.a; // Preserve the alpha value
         drinkRenderer.material.color = color;
         this.color = color;
     }

@@ -103,6 +103,10 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.5566038
       objectReference: {fileID: 0}
+    - target: {fileID: 2197576373282548174, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.281
+      objectReference: {fileID: 0}
     - target: {fileID: 2875108287959605109, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: playOnAwake
       value: 1
@@ -137,15 +141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7373949268700857907, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8690653
+      value: -0.53771544
       objectReference: {fileID: 0}
     - target: {fileID: 7373949268700857907, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79217625
+      value: 0.59618735
       objectReference: {fileID: 0}
     - target: {fileID: 7373949268700857907, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.49357986
+      value: 1.1111857
       objectReference: {fileID: 0}
     - target: {fileID: 7373949268700857907, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: m_LocalRotation.w
