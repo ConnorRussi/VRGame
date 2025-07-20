@@ -2,49 +2,63 @@ using System;
 using System.Security.Cryptography;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using TMPro;
+using JetBrains.Annotations;
 
 public class NPC : MonoBehaviour
 {
-    public bool thief;
     public bool isDead;
     public bool isHostile;
     public float currhealth;
-    public float maxHealth;
-    public float angerIncrement;
-    public float angerLevel, angerCap;
-    public float maxAngerCap, minAngerCap;
+    public NPCDefault defaults;
+
+    public float angerLevel;
+
+    public TextMeshPro orderText;
     public struct Order
     {
-        public Color color;
+        public NPCDefault.drink drink;
         public string cupType;
-        public bool ice, mint, lemon;
+        public Color color;
+        public bool ice, cherry, lemon;
     }
     public Order myOrder;
-    public Color orderColor;
-    public string orderCupType;
-    public bool orderIce, orderMint, orderLemon;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         angerLevel = 0.0f;
-        angerCap = Random.Range(minAngerCap, maxAngerCap);
-        currhealth = maxHealth;
-        myOrder.color = orderColor;
-        myOrder.cupType = orderCupType;
-        myOrder.ice = orderIce;
-        myOrder.mint = orderMint;
-        myOrder.lemon = orderLemon;
+        defaults.angerCap = Random.Range(defaults.minAngerCap, defaults.maxAngerCap);
+        currhealth = defaults.maxHealth;
+        CreateOrder();
+        //chose an open coaster for npc to walk to and claim coaster
+        //Set path for npc to walk (enter and exit path)
+
     }
     public void FixedUpdate()
     {
-        angerLevel += Time.deltaTime * angerIncrement;
-        if (angerLevel >= angerCap && !isHostile)
+        angerLevel += Time.deltaTime * defaults.angerIncrement;
+        if (angerLevel >= defaults.angerCap && !isHostile)
         {
             isHostile = true;
             Debug.Log("NPC has become hostile due to high anger level.");
         }
     }
-
+    void CreateOrder()
+    {
+        // Create a random order for the NPC
+        int drinkIndex = Random.Range(0, defaults.drinkList.Count);
+        myOrder = new Order();
+        myOrder.drink = defaults.drinkList[drinkIndex];
+        myOrder.cupType = myOrder.drink.cupType;
+        myOrder.color = myOrder.drink.color;
+        myOrder.ice = myOrder.drink.iceAllowed && Random.Range(0, 2) == 0; // 50% chance to have ice
+        myOrder.cherry = myOrder.drink.cherryAllowed && Random.Range(0, 2) == 0; // 50% chance to have cherry
+        myOrder.lemon = myOrder.drink.lemonAllowed && Random.Range(0, 2) == 0; // 50% chance to have lemon
+        orderText.text = $"Order: {myOrder.drink.liquidName} in a {myOrder.cupType} cup with " +
+                         $"{(myOrder.ice ? "ice" : "no ice")}, " +
+                         $"{(myOrder.cherry ? "cherry" : "no cherry")}, " +
+                         $"{(myOrder.lemon ? "lemon" : "no lemon")}.";
+    }
     void OnTriggerEnter(Collider other)
     {
         Cup cup = other.gameObject.GetComponent<Cup>();
@@ -60,20 +74,16 @@ public class NPC : MonoBehaviour
         // This is a placeholder for actual comparison logic
         Debug.Log("Comparing order with NPC's order.");
         if (cup.ice == myOrder.ice &&
-           cup.mint == myOrder.mint &&
+           cup.mint == myOrder.cherry &&
            cup.lemon == myOrder.lemon &&
            tag == myOrder.cupType && ColorsAreClose(cup.drinkRenderer.material.color, myOrder.color))
         {
             Debug.Log("The drink matches the NPC's order.");
-            Debug.Log(myOrder.color);
-            Debug.Log(cup.drinkRenderer.material.color);
             // Logic for when the drink matches the order
         }
         else
         {
-            Debug.Log(orderColor + " " + orderCupType + " " + orderIce + " " + orderMint + " " + orderLemon);
-            Debug.Log(cup.drinkRenderer.material.color + " " + tag + " " + cup.ice + " " + cup.mint + " " + cup.lemon);
-            Debug.Log((cup.ice == myOrder.ice) + " " + (cup.mint == myOrder.mint) + " " + (cup.lemon == myOrder.lemon) + " " + ColorsAreClose(cup.drinkRenderer.material.color, myOrder.color) + " " + (tag == myOrder.cupType));
+           
             Debug.Log("The drink does not match the NPC's order.");
             // Logic for when the drink does not match the order
         }
@@ -87,7 +97,7 @@ public class NPC : MonoBehaviour
     }
     public void bulletHit(float damage)
     {
-        angerLevel = angerCap;
+        angerLevel = defaults.angerCap;
         isHostile = true;
         if (isDead) return;
         currhealth -= damage;
