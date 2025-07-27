@@ -7,7 +7,14 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // Find all objects with the "Coaster" tag and add them to the coasters list
+        FindAllCoasters();
+    }
+    /// <summary>
+    /// Finds all coasters in the scene and stores them in the coasters list.
+    /// Initially, all coasters are deactivated.
+    /// </summary>
+    void FindAllCoasters()
+    {
         coasters = new List<GameObject>(GameObject.FindGameObjectsWithTag("Coaster"));
         foreach (GameObject coaster in coasters)
         {
@@ -15,8 +22,15 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("all coasters turned off");
     }
+/// <summary>
+/// Assigns an unclaimed coaster to the NPC.
+/// If no unclaimed coasters are available, it logs a warning.
+/// If there are unclaimed coasters, it randomly selects one and claims it for the NPC
+/// </summary>
+/// <param name="npc"></param>
     public void assignCoaster(NPC npc)
     {
+//*****&Later if want to save some performance can use a order of coasters to assign instead of random
         if (coasters.Count == 0)
         {
             Debug.LogWarning("No coasters available to assign.");

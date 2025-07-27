@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NPCDefault
   m_EditorClassIdentifier: 
   maxHealth: 0
-  angerIncrement: 0.003
+  angerIncrement: 0.25
   wrongDrinkIncrement: 1
-  maxAngerCap: 15
-  minAngerCap: 12
+  maxAngerCap: 5
+  minAngerCap: 4

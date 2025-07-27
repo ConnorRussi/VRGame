@@ -5,8 +5,14 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class Coaster : MonoBehaviour
 {
     public bool claimed;
+    float timeBetweenCupCheck = 0.75f; // Time to wait before checking if the cup is placed correctly
     public NPC owner;
 
+    /// <summary>
+    /// Claims the coaster for the NPC.
+    /// If the coaster is already claimed, it logs a warning.
+    /// </summary>
+    /// <param name="npc"></param>
     public void Claim(NPC npc)
     {
         if (claimed)
@@ -25,6 +31,10 @@ public class Coaster : MonoBehaviour
         }
         Debug.Log("Coaster claimed by: " + owner.name);
     }
+/// <summary>
+/// Releases the coaster from the NPC.
+/// If the coaster is not claimed, it logs a warning.
+/// </summary>
     public void releaseCoaster()
     {
         if (!claimed)
@@ -39,7 +49,11 @@ public class Coaster : MonoBehaviour
         owner = null;
         gameObject.SetActive(false); // Optionally deactivate the coaster
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+/// <summary>
+/// Handles the trigger event when a cup enters the coaster's collider.
+/// If the coaster is claimed, it starts a coroutine to check if the cup is placed correctly
+/// </summary>
+/// <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Cup>() == null)
@@ -54,12 +68,22 @@ public class Coaster : MonoBehaviour
         }
     }
 
-    // HIGHLIGHT: Coroutine to ensure cup is placed and not held
+/// <summary>
+/// Coroutine to check if the cup is placed correctly on the coaster.
+/// If the cup is still overlapping the coaster after a short delay, it compares the drink in the cup to the NPC's order.
+/// If the cup is still being held by XR Interaction, it does not compare.
+/// </summary>
+/// <param name="cup"></param>
+/// <param name="cupObject"></param>
+/// <returns></returns>
     private System.Collections.IEnumerator WaitAndCheckCup(Cup cup, GameObject cupObject)
     {
         // Wait a short time to ensure the cup is placed (tweak as needed)
-        yield return new WaitForSeconds(0.75f);
-
+        yield return new WaitForSeconds(timeBetweenCupCheck);
+        if(cup == null || cupObject == null)
+        {
+           yield break; // Exit if cup or cupObject is null
+        }
         // Check if the cup is still overlapping the coaster
         Collider coasterCollider = GetComponent<Collider>();
         Collider cupCollider = cupObject.GetComponent<Collider>();
