@@ -51,17 +51,17 @@ public class Spout : MonoBehaviour
             angle = lever.angle;
             if (angle < maxPourAngle)
             {
-                Debug.Log("Pouring drink at angle: " + angle);
+                //Debug.Log("Pouring drink at angle: " + angle);
               
                 //drinkParticles.Play();
                 drinkEmission.rateOverTime = 20f;
                 //collisionParticles.Play();
-                collisionEmission.rateOverTime = 2f;
+                collisionEmission.rateOverTime = 5f;
             
             }
             else
             {
-                Debug.Log("not Pouring drink at angle: " + angle);
+                //Debug.Log("not Pouring drink at angle: " + angle);
                 
                 //drinkParticles.Stop();
                 drinkEmission.rateOverTime = 0f;

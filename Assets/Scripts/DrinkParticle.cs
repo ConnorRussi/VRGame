@@ -9,7 +9,7 @@ public class DrinkParticle : MonoBehaviour
     /// <param name="other"></param>
     void OnParticleCollision(GameObject other)
     {
-        //Debug.Log("Particle collided with: " + other.name);
+        Debug.Log("Particle collided with: " + other.name);
         other.GetComponent<Cup>()?.FillCup(drinkParticles.main.startColor.color);
     }
 }
