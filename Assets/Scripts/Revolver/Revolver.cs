@@ -45,7 +45,7 @@ public class Revolver : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        Debug.Log("fire called");
+        //Debug.Log("fire called");
         readyToFire = false;
         currentAmmo--;
 
@@ -96,7 +96,7 @@ public class Revolver : MonoBehaviour
     /// </summary>
     void finishAnimation()
     {
-        Debug.Log("resetFire");
+        //Debug.Log("resetFire");
         readyToFire = true;
         // bullets[currentAmmo].SetActive(false);
         // bullets[maxAmmo - currentAmmo].SetActive(true);
@@ -184,7 +184,6 @@ public class Revolver : MonoBehaviour
             // Reset ammo for player, enable reload, etc.
             currentAmmo = maxAmmo;
             readyToFire = true;
-            gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
         else
         {
@@ -192,7 +191,10 @@ public class Revolver : MonoBehaviour
             maxAmmo = int.MaxValue; // NPCs can have infinite ammo
             currentAmmo = maxAmmo; // Set to max ammo for NPCs
             readyToFire = true;
-            gameObject.GetComponent<Rigidbody>().isKinematic = true; // Make the revolver kinematic for NPCs
+            Destroy(gameObject.GetComponent<XRInteractableTwoAttach>());
+            Destroy(gameObject.GetComponent<Rigidbody>());
+            
+            
         }
     }
 }

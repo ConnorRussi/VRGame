@@ -82,7 +82,7 @@ public class RevolverShoot : MonoBehaviour
         if (!revolverSC.readyToFire) return;
         if (revolverSC.currentAmmo > 0 || gunOwner == Revolver.GunOwner.NPC)
         {
-            Debug.Log("play animation");
+           // Debug.Log("play animation");
             revAnimator.Play("ShootAnimation");
             return;
             //normal shoot animation

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -33,31 +34,26 @@ public class Spawnables : MonoBehaviour
                 yield return new WaitForSeconds(checkDelay);
                 continue; // Skip the rest of the loop if on delay
             }
-            Collider[] hits = Physics.OverlapSphere(spawnPoint.transform.position, checkradius, checkLayerMask);
-            foreach (var col in hits)
+            if(Vector3.Distance(spawnPoint.position, currentSpawnedObject.transform.position) < checkradius)
             {
-                if (col.gameObject == currentSpawnedObject)
-                {
-                    yield return new WaitForSeconds(checkDelay);
-                    continue;
-                }
-
+                yield return new WaitForSeconds(checkDelay);
+                continue; // Skip the rest of the loop if an object is found
             }
-
             //spawn if the object is not found
             Destroy(currentSpawnedObject);
             currentSpawnedObject = null;
+            onDelays = true; // Set the delay flag to prevent immediate respawning
             SpawnObject();
             yield return new WaitForSeconds(checkDelay);
             
         }
        
     }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(spawnPoint.position, checkradius);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(spawnPoint.position, checkradius);
+    // }
     void SpawnedObjectGrabbed(SelectEnterEventArgs args)
     {
         if (onDelays)

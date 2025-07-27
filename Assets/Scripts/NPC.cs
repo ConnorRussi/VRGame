@@ -42,8 +42,7 @@ public class NPC : MonoBehaviour
     public float maxShootInterval; // Maximum time between
     public float accuracy; // Lower = more accurate
     public float smoothSpeed; //speed of rotation towards player
-
-
+  
     public GameObject coaster;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -137,12 +136,12 @@ public class NPC : MonoBehaviour
         // This is a placeholder for actual comparison logic
         Debug.Log("Comparing order with NPC's order.");
         bool iceMatch = cup.ice == myOrder.ice;
-        bool mintMatch = cup.mint == myOrder.cherry;
+        bool cherryMatch = cup.cherry == myOrder.cherry;
         bool lemonMatch = cup.lemon == myOrder.lemon;
         bool tagMatch = tag == myOrder.drink.cupType.ToString();
         bool colorMatch = ColorsAreClose(cup.drinkRenderer.material.color, myOrder.drink.color);
 
-        if (iceMatch && mintMatch && lemonMatch && tagMatch && colorMatch)
+        if (iceMatch && cherryMatch && lemonMatch && tagMatch && colorMatch)
         {
             Debug.Log("The drink matches the NPC's order.");
             // Logic for when the drink matches the order
@@ -154,7 +153,7 @@ public class NPC : MonoBehaviour
         {
             Debug.Log("The drink does not match the NPC's order.");
             if (!iceMatch) Debug.Log($"Mismatch: ice (Cup: {cup.ice}, Order: {myOrder.ice})");
-            if (!mintMatch) Debug.Log($"Mismatch: mint/cherry (Cup: {cup.mint}, Order: {myOrder.cherry})");
+            if (!cherryMatch) Debug.Log($"Mismatch: cherry (Cup: {cup.cherry}, Order: {myOrder.cherry})");
             if (!lemonMatch) Debug.Log($"Mismatch: lemon (Cup: {cup.lemon}, Order: {myOrder.lemon})");
             if (!tagMatch) Debug.Log($"Mismatch: cup type/tag (Cup: {tag}, Order: {myOrder.drink.cupType})");
             if (!colorMatch) Debug.Log($"Mismatch: color (Cup: {cup.drinkRenderer.material.color}, Order: {myOrder.drink.color})");
@@ -268,7 +267,7 @@ public class NPC : MonoBehaviour
         }
         hostileStateSet = true; // Set the hostile state to true after aiming
         StartCoroutine(RevolverAimRoutine());
-
+        
         // Start shooting at the player
         StartCoroutine(RevolverShootRoutine());
     }

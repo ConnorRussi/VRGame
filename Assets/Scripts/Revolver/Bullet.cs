@@ -43,8 +43,8 @@ public class Bullet : MonoBehaviour
 
     private void OnHit(Collider collider, Vector3 hitPoint)
     {
-        Debug.Log("Bullet hit: " + collider.name);
-         var cInteractable = collider.GetComponent<CInteractable>();
+        //.Log("Bullet hit: " + collider.name);
+        var cInteractable = collider.GetComponent<CInteractable>();
         if (cInteractable != null)
         {   if(cInteractable.breakAble)
             {

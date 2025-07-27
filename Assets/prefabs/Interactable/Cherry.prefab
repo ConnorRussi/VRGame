@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2274374464564726047}
   m_Layer: 3
   m_Name: Cherry
-  m_TagString: Untagged
+  m_TagString: Cherry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 33
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_FocusMode: 1

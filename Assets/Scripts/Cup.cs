@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Cup : MonoBehaviour
 {
-    public GameObject drink, iceGO, mintGO, lemonGO;
+    public GameObject drink, iceGO, cherryGO, lemonGO;
     public Renderer drinkRenderer;
 
     //These may be able to go to a scriptable object
@@ -19,11 +19,11 @@ public class Cup : MonoBehaviour
 
 
     public bool Dump; //empties the cup
-    public bool ice, mint, lemon;
+    public bool ice, cherry, lemon;
     public enum CupType
     {
         Ice,
-        Mint,
+        Cherry,
         Lemon
     }
     public Color color;
@@ -38,7 +38,9 @@ public class Cup : MonoBehaviour
         defaulXScale = drink.transform.localScale.x;
         defaulZScale = drink.transform.localScale.z;
         drink.transform.localScale = new Vector3(defaulXScale, currDrinkHeight, defaulZScale);
-        
+        GarnishChange(ice, CupType.Ice);
+        GarnishChange(cherry, CupType.Cherry);  
+        GarnishChange(lemon, CupType.Lemon);
     }
     /// <summary>
     /// checks if the Dump flag is set to true
@@ -93,14 +95,36 @@ public class Cup : MonoBehaviour
         {
             case CupType.Ice:
                 iceGO.SetActive(newValue);
+                ice = newValue;
                 break;
-            case CupType.Mint:
-                mintGO.SetActive(newValue);
+            case CupType.Cherry:
+                cherryGO.SetActive(newValue);
+                cherry = newValue;
                 break;
             case CupType.Lemon:
                 lemonGO.SetActive(newValue);
+                lemon = newValue;
                 break;
         }
     }
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ice"))
+        {
+            GarnishChange(true, CupType.Ice);
+        }
+        else if (other.CompareTag("Cherry"))
+        {
+            GarnishChange(true, CupType.Cherry);
+        }
+        else if (other.CompareTag("Lemon"))
+        {
+            GarnishChange(true, CupType.Lemon);
+        }
+        else
+        {
+            return; // Ignore other tags
+        }
+        Destroy(other.gameObject); // Destroy the garnish object after adding it to the cup
+    }
 }

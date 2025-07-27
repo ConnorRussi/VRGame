@@ -14,6 +14,9 @@ TagManager:
   - DrinkParticle
   - ShotGlass
   - Coaster
+  - Cherry
+  - Ice
+  - Lemon
   layers:
   - Default
   - TransparentFX
