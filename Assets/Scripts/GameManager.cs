@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject MugSpawnHolder, GlassSpawnHolder, bottleSpawnHolder;
+    public GameObject MugPrefab, glassPrefab;
+    public List<GameObject> bottles;
+    public List<GameObject> bottleSpawns;
     public List<GameObject> coasters;
+    public List<GameObject> mugSpawns;
+    public List<GameObject> glassSpawns;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         FindAllCoasters();
+        FindAllSpawns(MugSpawnHolder, MugPrefab);
+        FindAllSpawns(GlassSpawnHolder, glassPrefab);
+        SpawnBottles();
     }
     /// <summary>
     /// Finds all coasters in the scene and stores them in the coasters list.
@@ -22,15 +31,15 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("all coasters turned off");
     }
-/// <summary>
-/// Assigns an unclaimed coaster to the NPC.
-/// If no unclaimed coasters are available, it logs a warning.
-/// If there are unclaimed coasters, it randomly selects one and claims it for the NPC
-/// </summary>
-/// <param name="npc"></param>
+    /// <summary>
+    /// Assigns an unclaimed coaster to the NPC.
+    /// If no unclaimed coasters are available, it logs a warning.
+    /// If there are unclaimed coasters, it randomly selects one and claims it for the NPC
+    /// </summary>
+    /// <param name="npc"></param>
     public void assignCoaster(NPC npc)
     {
-//*****&Later if want to save some performance can use a order of coasters to assign instead of random
+        //*****&Later if want to save some performance can use a order of coasters to assign instead of random
         if (coasters.Count == 0)
         {
             Debug.LogWarning("No coasters available to assign.");
@@ -71,6 +80,30 @@ public class GameManager : MonoBehaviour
         Coaster chosenComponent = chosenCoaster.GetComponent<Coaster>();
         chosenComponent.Claim(npc);
     }
-        
+    void FindAllSpawns(GameObject spawnHolder, GameObject prefab)
+    {
+        foreach (Transform child in spawnHolder.transform)
+        {
+            mugSpawns.Add(child.gameObject);
+            if (prefab == null) continue; // Skip if no prefab is provided for bottles
+            Instantiate(prefab, child.position, child.rotation);
+        }
+    }
+    void SpawnBottles()
+    {
+        for(int i = 0; i < bottleSpawns.Count; i++)
+        {
+            if (i < bottles.Count)
+            {
+                Instantiate(bottles[i], bottleSpawns[i].transform.position, bottleSpawns[i].transform.rotation);
+            }
+            else
+            {
+                Debug.LogWarning("Not enough bottles to spawn at all bottle spawns.");
+                break;
+            }
+        }
+    }
+     
    
 }
