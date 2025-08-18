@@ -7,6 +7,13 @@ public class Coaster : MonoBehaviour
     public bool claimed;
     float timeBetweenCupCheck = 0.75f; // Time to wait before checking if the cup is placed correctly
     public NPC owner;
+    public GameObject wrapper;
+
+
+    //make non changable later
+    public GameObject[] path;
+    public GameManager gameManager;
+
 
     /// <summary>
     /// Claims the coaster for the NPC.
@@ -24,11 +31,11 @@ public class Coaster : MonoBehaviour
         claimed = true;
         owner = npc;
         npc.currentCoaster = this;
-        gameObject.SetActive(true); // Reactivate the coaster if it was deactivated
-        foreach (Transform child in transform) // HIGHLIGHT
-        {
-            child.gameObject.SetActive(true); // HIGHLIGHT
-        }
+        wrapper.SetActive(true); 
+        // foreach (Transform child in transform) // HIGHLIGHT
+        // {
+        //     child.gameObject.SetActive(true); // HIGHLIGHT
+        // }
         Debug.Log("Coaster claimed by: " + owner.name);
     }
 /// <summary>
@@ -47,7 +54,8 @@ public class Coaster : MonoBehaviour
         claimed = false;
         owner.currentCoaster = null;
         owner = null;
-        gameObject.SetActive(false); // Optionally deactivate the coaster
+        gameManager.unclaimedCoasters.Add(gameObject); // Add the coaster back to the unclaimed list
+        wrapper.SetActive(false); // Optionally deactivate the coaster
     }
 /// <summary>
 /// Handles the trigger event when a cup enters the coaster's collider.

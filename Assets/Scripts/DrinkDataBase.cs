@@ -24,10 +24,10 @@ public class DrinkDataBase : MonoBehaviour
 
     public List<Drink> drinkList = new List<Drink>();
 
-    void Start()
+    void Awake()
     {
-        for (int i = 0; i < drinkNames.Length; i++)
-        {
+        for (int i = 0; i <= drinkNames.Length - 1; i++)
+        {   
             Drink newDrink = new Drink
             {
                 liquidName = drinkNames[i],

@@ -91,13 +91,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1609861619696226609, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: bottleType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 550237140932455027, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 550237140932455027, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.495283
+      value: 0.4198113
       objectReference: {fileID: 0}
     - target: {fileID: 550237140932455027, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.71159035
+      value: 0.9115298
       objectReference: {fileID: 0}
     - target: {fileID: 550237140932455027, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -126,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 2875108287959605109, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0.990566
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750060782563060402, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 1025
       objectReference: {fileID: 0}
     - target: {fileID: 3919861089240564404, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
       propertyPath: m_Name
@@ -199,6 +211,14 @@ PrefabInstance:
       propertyPath: mesh
       value: 
       objectReference: {fileID: 5595268759173989258}
+    - target: {fileID: 8322678972479693728, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: breakAble
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8322678972479693728, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}
+      propertyPath: maxTimeBetweenDropSound
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6575046367890256505, guid: 6c718d6b39bc94b4b8f8b8c4a2da5658, type: 3}

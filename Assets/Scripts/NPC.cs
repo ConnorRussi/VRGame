@@ -7,11 +7,11 @@ using JetBrains.Annotations;
 using UnityEditor.Build.Content;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Analytics;
 
 public class NPC : MonoBehaviour
 {
-    //private GameObject gameManger;
-    private GameManager gameManager;
+    public GameManager gameManager;
     public NPCDefault defaults;
     private DrinkDataBase drinkDataBase;
     public GameObject player;
@@ -42,12 +42,15 @@ public class NPC : MonoBehaviour
     public float maxShootInterval; // Maximum time between
     public float accuracy; // Lower = more accurate
     public float smoothSpeed; //speed of rotation towards player
-  
+
+    [Header("NPC Pathfinding Properties")]
+    private NPCPathFinding npcPathFinding;
     public GameObject coaster;
+    public bool isPathing = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        player = GameObject.Find("Player");
         if (gameManager == null)
         {
             Debug.LogError("GameManager not found in the scene.");
@@ -59,7 +62,8 @@ public class NPC : MonoBehaviour
         currhealth = defaults.maxHealth;
         CreateOrder();
         //chose an open coaster for npc to walk to and claim coaster
-        gameManager.assignCoaster(this);
+
+        coaster = gameManager.assignCoaster(gameObject);
         if (currentCoaster == null)
         {
             Debug.LogError("No coaster assigned to NPC: " + gameObject.name);
@@ -67,38 +71,44 @@ public class NPC : MonoBehaviour
         }
         //Set path for npc to walk (enter and exit path)
         angerSlider.value = 1.0f; // Set the anger slider to max value
-
+        npcPathFinding = GetComponent<NPCPathFinding>();
+        
     }
     /// <summary>
     /// updates angerlevel and checks if npc is hostile
     /// </summary>
-    public void FixedUpdate()
+    public System.Collections.IEnumerator UpdateAngerLevel()
     {
-        if (!hostileStateSet)
+        while (!isPathing && !isDead)
         {
-            angerLevel += Time.deltaTime * defaults.angerIncrement;
-            if (angerCap <= 0) Debug.LogError("Anger cap is less than or equal to zero, this should not happen.");
-            angerSlider.value = 1 - Mathf.Clamp01(angerLevel / angerCap); // Update the slider value based on anger level
-            if (angerLevel >= angerCap && !isHostile)
+            yield return new WaitForFixedUpdate();
+            if (!hostileStateSet)
             {
-                isHostile = true;
-                EnterHostileState();
-                Debug.Log("NPC has become hostile due to high anger level.");
+                angerLevel += Time.deltaTime * defaults.angerIncrement;
+                if (angerCap <= 0) Debug.LogError("Anger cap is less than or equal to zero, this should not happen.");
+                angerSlider.value = 1 - Mathf.Clamp01(angerLevel / angerCap); // Update the slider value based on anger level
+                if (angerLevel >= angerCap && !isHostile)
+                {
+                    isHostile = true;
+                    EnterHostileState();
+                    Debug.Log("NPC has become hostile due to high anger level.");
+                }
+                continue; // Exit if not hostile
             }
-            return; // Exit if not hostile
+            //do hostile state things
+            Vector3 aimDirection = GetDirection();
+            if (revolver != null)
+            {
+                // Smoothly rotate the revolver towards the aim direction
+                Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
+                revolver.transform.rotation = Quaternion.Slerp(
+                    revolver.transform.rotation,
+                    targetRotation,
+                    Time.deltaTime * smoothSpeed
+                );
+            }
         }
-        //do hostile state things
-        Vector3 aimDirection = GetDirection();
-        if (revolver != null)
-        {
-            // Smoothly rotate the revolver towards the aim direction
-            Quaternion targetRotation = Quaternion.LookRotation(aimDirection);
-            revolver.transform.rotation = Quaternion.Slerp(
-                revolver.transform.rotation,
-                targetRotation,
-                Time.deltaTime * smoothSpeed
-            );
-        }
+
     }
     /// <summary>
     /// Creates a random order for the NPC 
@@ -110,8 +120,8 @@ public class NPC : MonoBehaviour
     {
         // Create a random order for the NPC
         //the +1 is for the 0, 0  case
-        //int drinkIndex = Random.Range(0, drinkDataBase.drinkList.Count);
-        int drinkIndex = 0;
+        int drinkIndex = Random.Range(0, drinkDataBase.drinkList.Count);
+        //int drinkIndex = 0;
         myOrder = new Order();
         myOrder.drink = drinkDataBase.drinkList[drinkIndex];
         Debug.Log("drink base index: " + drinkIndex);
@@ -146,8 +156,9 @@ public class NPC : MonoBehaviour
             Debug.Log("The drink matches the NPC's order.");
             // Logic for when the drink matches the order
             cupObject.GetComponent<CInteractable>().Break();
-            coaster.GetComponent<Coaster>().releaseCoaster();
             //set to leave and have leave on path
+            isPathing = true;
+            StartCoroutine(npcPathFinding.PathFindOut());
         }
         else
         {
@@ -193,13 +204,6 @@ public class NPC : MonoBehaviour
             Debug.Log("NPC took damage, current health: " + currhealth);
             // Logic for when the NPC takes damage but is still alive
         }
-    }
-    void Die()
-    {
-        isDead = true;
-        Debug.Log("NPC has died.");
-        gameObject.SetActive(false); // Deactivate the NPC GameObject
-        // Logic for when the NPC dies, such as playing an animation or removing the NPC from the game
     }
     void EnterHostileState()
     {
@@ -267,7 +271,7 @@ public class NPC : MonoBehaviour
         }
         hostileStateSet = true; // Set the hostile state to true after aiming
         StartCoroutine(RevolverAimRoutine());
-        
+
         // Start shooting at the player
         StartCoroutine(RevolverShootRoutine());
     }
@@ -328,5 +332,20 @@ public class NPC : MonoBehaviour
             }
             yield return new WaitForSeconds(aimUpdateInterval);
         }
+    }
+
+    public void Die()
+    {
+        Debug.Log(gameObject.name + " NPC has died.");
+        coaster.GetComponent<Coaster>().releaseCoaster();
+        
+        isDead = true;
+        if (revolver != null)
+        {
+            Destroy(revolver); // Destroy the revolver if it exists
+        }
+        gameManager.npcs.Remove(gameObject); // Remove this NPC from the GameManager's list
+        Destroy(gameObject); // Destroy the NPC GameObject
+
     }
 }

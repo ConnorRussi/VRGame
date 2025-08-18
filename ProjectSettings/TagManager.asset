@@ -18,6 +18,7 @@ TagManager:
   - Ice
   - Lemon
   - Mug
+  - NavPoint
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - HeadWearable
   - Building
   - Cup
-  - 
+  - Bottle
   - 
   - 
   - 

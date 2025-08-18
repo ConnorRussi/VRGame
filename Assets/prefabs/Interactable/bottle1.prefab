@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 550237140932455027}
   - component: {fileID: 5751706072190951136}
   - component: {fileID: 1069381683474208257}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DrinkParticle
   m_TagString: DrinkParticle
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4878,7 +4878,7 @@ GameObject:
   - component: {fileID: 572234736486725627}
   - component: {fileID: 6959605909451320118}
   - component: {fileID: 8727267157198068234}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DrinkParticle (1)
   m_TagString: DrinkParticle
   m_Icon: {fileID: 0}
@@ -4917,7 +4917,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -9748,7 +9748,8 @@ GameObject:
   - component: {fileID: 2875108287959605109}
   - component: {fileID: 6179749535474592166}
   - component: {fileID: 5264396289752733164}
-  m_Layer: 0
+  - component: {fileID: -1609861619696226609}
+  m_Layer: 10
   m_Name: bottle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9819,7 +9820,7 @@ MonoBehaviour:
   collisionParticles: {fileID: 572234736486725627}
   dropSound: {fileID: 8300000, guid: f44b78277cb690e40aa2f79fba0f9e68, type: 3}
   breakSound: {fileID: 8300000, guid: 24f6863efb6ffc54c82881d15bf911f6, type: 3}
-  maxTimeBetweenDropSound: 0
+  maxTimeBetweenDropSound: 2
   destroyAfterTime: 0
   breakAble: 1
   collisionThreshold: 0
@@ -9850,7 +9851,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 1025
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_FocusMode: 1
@@ -10098,7 +10099,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -14960,6 +14961,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.067846775, y: 0.22695428, z: 0.11897227}
   m_Center: {x: 0.0011096597, y: 0.10805771, z: 0.0037837774}
+--- !u!114 &-1609861619696226609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3919861089240564404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c2163a6c2b596439f6e841ad6dd443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottleType: 0
 --- !u!1001 &6340549323161276200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15023,6 +15037,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5c0978b05d8a47948ab16f4a7c486566, type: 3}
       propertyPath: m_Name
       value: Wine Bottle 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5c0978b05d8a47948ab16f4a7c486566, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

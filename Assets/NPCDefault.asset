@@ -15,5 +15,5 @@ MonoBehaviour:
   maxHealth: 0
   angerIncrement: 0.25
   wrongDrinkIncrement: 1
-  maxAngerCap: 5
-  minAngerCap: 4
+  maxAngerCap: 10
+  minAngerCap: 5

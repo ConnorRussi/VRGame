@@ -38,7 +38,7 @@ public class CInteractable : MonoBehaviour
     [Header("Spawnable Objects")]
     public bool Spawnable;
     public BoxCollider[] OGGrabColliders; // Colliders that are used to grab the object from spawner
-    
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -53,6 +53,14 @@ public class CInteractable : MonoBehaviour
             drinkEmission = drinkParticles.emission;
         }
         SpawnableObjectTransition(Spawnable);
+        if (maxTimeBetweenDropSound <= 0)
+        {
+            maxTimeBetweenDropSound = 1.0f; // Default value to prevent division by zero
+        }
+        if(collisionThreshold <= 0)
+        {
+            collisionThreshold = 1.0f; // Default value to prevent division by zero
+        }
     }
     public void FixedUpdate()
     {
@@ -115,8 +123,10 @@ public class CInteractable : MonoBehaviour
 
         if (breakAble && rb.GetRelativePointVelocity(transform.position).magnitude > breakThreshold)
         {
+            Debug.Log(gameObject.name + " broke with " + rb.GetRelativePointVelocity(transform.position).magnitude + " magnitude");
             Break();
         }
+        //**************WHY ARE THERE TWO VERSIONS??? COME BACK AND REVIEW THIS LATER**************
         else if (collision.relativeVelocity.magnitude > collisionThreshold)
         {
             if (dropSound != null && allowedPlaySound)
@@ -141,6 +151,7 @@ public class CInteractable : MonoBehaviour
     /// <param name="sound"></param>
     void PlaySound(AudioClip sound)
     {
+        //Debug.Log(gameObject.name + " played sound: " + sound.name);
         audioSource.PlayOneShot(sound);
         allowedPlaySound = false;
         Invoke("ResetAllowedPlaySound", maxTimeBetweenDropSound);
