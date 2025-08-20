@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public List<GameObject> coasters, unclaimedCoasters; // List of all coasters and unclaimed coasters
     //public List<GameObject> mugSpawns;
     //public List<GameObject> glassSpawns;
-    bool spawning = true; // Flag to control the spawning process
     public bool onDelays = false; // Flag to control the delay before respawning
     public float checkDelay; // Delay in seconds between checks for existing objects
 
@@ -38,6 +37,9 @@ public class GameManager : MonoBehaviour
     public GameObject npcSpawnPoint; // Point where NPCs will be spawned
     public int maxNPC; // Number of NPCs to spawn
     public List<GameObject> npcs = new List<GameObject>(); // List to hold spawned NPCs
+    public float minNpcSpawnDelay, maxNpcSpawnDelay = 3.0f; // Delay between NPC spawns
+    public bool spawning = true; // Flag to control the spawning process
+
 
 
     void Awake()
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
-        SpawnNPC();
+        StartCoroutine(NPCManagment()); // Start managing NPCs
     }
     /// <summary>
     /// Finds all coasters in the scene and stores them in the coasters list.
@@ -233,5 +235,21 @@ public class GameManager : MonoBehaviour
         
         
     }
+    System.Collections.IEnumerator NPCManagment()
+    {
+        while (spawning)
+        {
+            yield return new WaitForSeconds(1f); // Wait for 1 second before checking again
+            while (npcs.Count < maxNPC)
+            {
+                yield return new WaitForSeconds(Random.Range(minNpcSpawnDelay,maxNpcSpawnDelay)); // Wait for __ seconds before spawning a new NPC
+                if (!npcSpawnPoint.GetComponent<NavPoint>().claimed)
+                {
+                    SpawnNPC();
+                }
 
+            }
+        }
+
+    }
 }

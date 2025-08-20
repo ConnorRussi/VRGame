@@ -17,7 +17,7 @@ public class NPCPathFinding : MonoBehaviour
     }
     private bool MoveTowardsWaypoint()
     {
-        Debug.Log("Moving towards waypoint: " + currentWaypointIndex);
+        //Debug.Log("Moving towards waypoint: " + currentWaypointIndex);
         Transform targetWaypoint = path[currentWaypointIndex].transform;
 
         // Direction only on XZ plane
@@ -39,46 +39,62 @@ public class NPCPathFinding : MonoBehaviour
     }
     public System.Collections.IEnumerator PathFindIn()
     { 
-        Debug.Log("Starting pathfinding for NPC: " + gameObject.name);
+        path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+       // Debug.Log("Starting pathfinding for NPC: " + gameObject.name);
         while (!reachedEnd)
         {
             yield return new WaitForFixedUpdate(); // Wait for the next physics update
+
             if (MoveTowardsWaypoint())
             {
+                if (currentWaypointIndex + 1 >= path.Length || !path[currentWaypointIndex + 1].GetComponent<NavPoint>().claimed)
+                {
+                    path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
+                }
                 Debug.Log("Reached waypoint: " + currentWaypointIndex + " " + path[currentWaypointIndex].name);
                 currentWaypointIndex++;
-                
                 if (currentWaypointIndex >= path.Length)
                 {
-                    Debug.Log(gameObject.name + " has reached the end of the path, enter.");
+                    //Debug.Log(gameObject.name + " has reached the end of the path, enter.");
                     StartCoroutine(npc.UpdateAngerLevel());
                     yield break; // Exit the coroutine
                 }
+                path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+
             }
             else
             {
                 yield return null; // Wait for the next frame if not moving
             }
         }
-        Debug.Log("end of pathfinding for NPC: " + gameObject.name);
+       // Debug.Log("end of pathfinding for NPC: " + gameObject.name);
         reachedEnd = true; // Set the flag to true when the end of the path is
     }
     public System.Collections.IEnumerator PathFindOut()
     {
         currentWaypointIndex--; // Start from the last waypoint
         reachedEnd = false; // Reset the flag for the return path
+        path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+
         while (!reachedEnd)
         {
             yield return new WaitForFixedUpdate(); // Wait for the next physics update
             if (MoveTowardsWaypoint())
             {
+                if (!path[currentWaypointIndex--].GetComponent<NavPoint>().claimed)
+                {
+                    path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
+                }
                 currentWaypointIndex--;
+
                 if (currentWaypointIndex < 0)
                 {
-                    Debug.Log(gameObject.name + " has reached the end of the path, exit.");
+                    //Debug.Log(gameObject.name + " has reached the end of the path, exit.");
                     npc.Die();
                     yield break; // Exit the coroutine
                 }
+                path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+
             }
             else
             {

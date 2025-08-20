@@ -32,7 +32,7 @@ public class RevolverShoot : MonoBehaviour
         grabbable.selectEntered.AddListener(OnGrab);
         grabbable.selectExited.AddListener(OnRelease);
         grabbed = false;
-        inputData = GameObject.Find("XR Origin (XR Rig)").GetComponent<InputData>();
+        inputData = GameObject.Find("Player").GetComponent<InputData>();
         if (inputData == null)
         {
             Debug.LogError("InputData component not found in XR Origin (XR Rig).");
