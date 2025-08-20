@@ -12,6 +12,8 @@ public class DrinkDataBase : MonoBehaviour
     public bool[] iceAllowed;
     public bool[] cherryAllowed;
     public bool[] lemonAllowed;
+    public Sprite[] cupSprites;
+    public Sprite[] bottleSprites;
 
     [System.Serializable]
     public struct Drink
@@ -20,6 +22,8 @@ public class DrinkDataBase : MonoBehaviour
         public CupType cupType; // Use enum here
         public Color color;
         public bool iceAllowed, cherryAllowed, lemonAllowed;
+        public Sprite cupSprite;
+        public Sprite bottleSprite;
     }
 
     public List<Drink> drinkList = new List<Drink>();
@@ -35,7 +39,9 @@ public class DrinkDataBase : MonoBehaviour
                 color = colors[i],
                 iceAllowed = iceAllowed[i],
                 cherryAllowed = cherryAllowed[i],
-                lemonAllowed = lemonAllowed[i]
+                lemonAllowed = lemonAllowed[i],
+                cupSprite = cupSprites[i],
+                bottleSprite = bottleSprites[i]
             };
             drinkList.Add(newDrink);
         }

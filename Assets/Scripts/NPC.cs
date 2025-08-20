@@ -23,7 +23,6 @@ public class NPC : MonoBehaviour
     public bool isHostile;
     public bool hostileStateSet;
     [Header("Order Properties")]
-    public TextMeshPro orderText;
     public Slider angerSlider;
     public struct Order
     {
@@ -32,6 +31,10 @@ public class NPC : MonoBehaviour
     }
     public Order myOrder;
     public Coaster currentCoaster;
+    public GameObject lemonMark, CherryMark, IceMark;
+    public Image drinkImage, cupImage;
+    public GameObject orderHolder;
+    
 
     [Header("Revolver Properties")]
     public GameObject revolverPrefab;
@@ -128,10 +131,16 @@ public class NPC : MonoBehaviour
         myOrder.ice = myOrder.drink.iceAllowed && Random.Range(0, 2) == 0; // 50% chance to have ice
         myOrder.cherry = myOrder.drink.cherryAllowed && Random.Range(0, 2) == 0; // 50% chance to have cherry
         myOrder.lemon = myOrder.drink.lemonAllowed && Random.Range(0, 2) == 0; // 50% chance to have lemon
-        orderText.text = $"Order: {myOrder.drink.liquidName} in a {myOrder.drink.cupType} cup with " +
-                         $"{(myOrder.ice ? "ice" : "no ice")}, " +
-                         $"{(myOrder.cherry ? "cherry" : "no cherry")}, " +
-                         $"{(myOrder.lemon ? "lemon" : "no lemon")}.";
+                                                                               // orderText.text = $"Order: {myOrder.drink.liquidName} in a {myOrder.drink.cupType} cup with " +
+                                                                               //                  $"{(myOrder.ice ? "ice" : "no ice")}, " +
+                                                                               //                  $"{(myOrder.cherry ? "cherry" : "no cherry")}, " +
+                                                                               //                  $"{(myOrder.lemon ? "lemon" : "no lemon")}.";
+        drinkImage.sprite = myOrder.drink.bottleSprite;
+        cupImage.sprite = myOrder.drink.cupSprite;
+        IceMark.SetActive(myOrder.ice);
+        CherryMark.SetActive(myOrder.cherry);
+        lemonMark.SetActive(myOrder.lemon);
+
     }
 
     /// <summary>
@@ -158,6 +167,8 @@ public class NPC : MonoBehaviour
             cupObject.GetComponent<CInteractable>().Break();
             //set to leave and have leave on path
             isPathing = true;
+            isHostile = false;
+            orderHolder.SetActive(false); // Hide the order holder UI
             StartCoroutine(npcPathFinding.PathFindOut());
         }
         else

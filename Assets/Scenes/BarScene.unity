@@ -1257,9 +1257,27 @@ MonoBehaviour:
   - {r: 0.6156863, g: 0.44705883, b: 0.24313726, a: 1}
   - {r: 0.48235294, g: 0.35686275, b: 0.28235295, a: 0}
   - {r: 0.90588236, g: 0.7137255, b: 0.38431373, a: 0}
-  iceAllowed: 01010101010101
-  cherryAllowed: 01010101010101
-  lemonAllowed: 01010101010101
+  iceAllowed: 0101010101010101
+  cherryAllowed: 0101010101010101
+  lemonAllowed: 0101010101010101
+  cupSprites:
+  - {fileID: 21300000, guid: 4e8326fcbb33cd547a6902df7af642fb, type: 3}
+  - {fileID: 21300000, guid: 4e8326fcbb33cd547a6902df7af642fb, type: 3}
+  - {fileID: 21300000, guid: 4e8326fcbb33cd547a6902df7af642fb, type: 3}
+  - {fileID: 21300000, guid: 4e8326fcbb33cd547a6902df7af642fb, type: 3}
+  - {fileID: 21300000, guid: 4e8326fcbb33cd547a6902df7af642fb, type: 3}
+  - {fileID: 21300000, guid: bafae647332db534bbe113391a6bb16f, type: 3}
+  - {fileID: 21300000, guid: bafae647332db534bbe113391a6bb16f, type: 3}
+  - {fileID: 21300000, guid: bafae647332db534bbe113391a6bb16f, type: 3}
+  bottleSprites:
+  - {fileID: 21300000, guid: debd087841ffa5247bd2d5000615c18a, type: 3}
+  - {fileID: 21300000, guid: 19f0d66adba54d6418df10d048ef1e81, type: 3}
+  - {fileID: 21300000, guid: 8e4249982bd8b69468f35ee55022d0e5, type: 3}
+  - {fileID: 21300000, guid: f1f81c35f1ebd9f4d951a35f3ab50509, type: 3}
+  - {fileID: 21300000, guid: a5bc74089fd39954b87a41ee94fe8a75, type: 3}
+  - {fileID: 21300000, guid: 8990302bf6c8c934ab752a22748beed5, type: 3}
+  - {fileID: 21300000, guid: e6e6a66e3f3516c46a79d6587f637a87, type: 3}
+  - {fileID: 21300000, guid: c28d0e78288a4b1448efea6e4d7f3a6c, type: 3}
   drinkList: []
 --- !u!4 &385031780
 Transform:
@@ -1315,7 +1333,7 @@ MonoBehaviour:
   respawnDelay: 3
   npcPrefab: {fileID: 1384759193446503928, guid: badf3b4c033010a42ae2629909123031, type: 3}
   npcSpawnPoint: {fileID: 1586402801}
-  maxNPC: 1
+  maxNPC: 10
   npcs: []
   minNpcSpawnDelay: 0
   maxNpcSpawnDelay: 1

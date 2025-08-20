@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> npcs = new List<GameObject>(); // List to hold spawned NPCs
     public float minNpcSpawnDelay, maxNpcSpawnDelay = 3.0f; // Delay between NPC spawns
     public bool spawning = true; // Flag to control the spawning process
-
+    
 
 
     void Awake()
