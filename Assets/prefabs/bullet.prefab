@@ -217,7 +217,7 @@ MonoBehaviour:
   destroyAfter: 5
   hitLayers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4095
 --- !u!1 &1953264866293164
 GameObject:
   m_ObjectHideFlags: 0

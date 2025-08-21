@@ -81,15 +81,17 @@ public class NPCPathFinding : MonoBehaviour
             yield return new WaitForFixedUpdate(); // Wait for the next physics update
             if (MoveTowardsWaypoint())
             {
-                if (!path[currentWaypointIndex--].GetComponent<NavPoint>().claimed)
+                if (!path[currentWaypointIndex - 1].GetComponent<NavPoint>().claimed)
                 {
                     path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
                 }
+                //path[currentWaypointIndex].GetComponent<NavPoint>().release();
                 currentWaypointIndex--;
 
                 if (currentWaypointIndex < 0)
                 {
                     //Debug.Log(gameObject.name + " has reached the end of the path, exit.");
+                    
                     npc.Die();
                     yield break; // Exit the coroutine
                 }

@@ -43,18 +43,31 @@ public class Bullet : MonoBehaviour
 
     private void OnHit(Collider collider, Vector3 hitPoint)
     {
-        //.Log("Bullet hit: " + collider.name);
+        Debug.LogWarning("Bullet hit: " + collider.name);
         var cInteractable = collider.GetComponent<CInteractable>();
         if (cInteractable != null)
-        {   if(cInteractable.breakAble)
+        {   if (cInteractable.breakAble)
             {
                 cInteractable.Break();
             }
-            else
+           
+        }
+        else
+        {
+            //use for damage on objects or play a hitsound
+            if(collider.TryGetComponent(out NPC npc))
             {
-                //use for damage on objects or play a hitsound
+                // If the NPC is hit, apply damage
+                npc.bulletHit(npc.bulletDamage);
+                Debug.Log("NPC hit by bullet, applying damage.");
             }
-            cInteractable.Break();
+            else if (collider.TryGetComponent(out PlayerHead ph))
+            {
+                Player player = ph.GetPlayer();
+                // If the Player is hit, apply damage
+                player.TakeDamage(player.bulletDamage);
+                Debug.Log("Player hit by bullet, applying damage.");
+            }
         }
         Rigidbody targetRb = collider.GetComponent<Rigidbody>();
         if (targetRb != null)

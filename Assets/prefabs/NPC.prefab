@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3310180706561939032}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 2922098113589979912}
   - component: {fileID: 1659420288747311641}
   - component: {fileID: 2888184786256141347}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CupHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1509430806184302988}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,9 @@ GameObject:
   - component: {fileID: 2438295779984734912}
   - component: {fileID: 6465633464824877532}
   - component: {fileID: 7131743658431898332}
-  m_Layer: 8
+  - component: {fileID: 7818109761718069094}
+  - component: {fileID: 7558170065806108603}
+  m_Layer: 11
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,6 +199,7 @@ MonoBehaviour:
   player: {fileID: 0}
   isDead: 0
   currhealth: 0
+  bulletDamage: 1
   angerLevel: 0
   angerCap: 10
   isHostile: 0
@@ -261,6 +264,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &7818109761718069094
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384759193446503928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0675046, y: 0.3547985, z: 0.4619574}
+  m_Center: {x: 0.03375222, y: 0.37329, z: 0.013937031}
+--- !u!65 &7558170065806108603
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384759193446503928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.47088423, y: 0.31825033, z: 0.45735756}
+  m_Center: {x: 0.32746017, y: 0.03433844, z: 0.008562952}
 --- !u!1 &1471928183663027191
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +317,7 @@ GameObject:
   - component: {fileID: 6817856043971720678}
   - component: {fileID: 8073732127471434810}
   - component: {fileID: 6675486936684238455}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: BottleHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1299410689037368599}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: HoldPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +424,7 @@ GameObject:
   - component: {fileID: 4130336314468268493}
   - component: {fileID: 7060607368217255268}
   - component: {fileID: 1713665490790752778}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: AngerMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +525,7 @@ GameObject:
   - component: {fileID: 9196345366507086441}
   - component: {fileID: 9057581861287255946}
   - component: {fileID: 3947658796232880088}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: LemonMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +600,7 @@ GameObject:
   - component: {fileID: 541921307188383543}
   - component: {fileID: 3257300902085437986}
   - component: {fileID: 3900208526497773433}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,7 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 924989019828037374}
   - component: {fileID: 5299450533537561690}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,7 +761,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3059725317772159207}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Wrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +795,7 @@ GameObject:
   - component: {fileID: 6192875115847311881}
   - component: {fileID: 6295769136694742751}
   - component: {fileID: 4413087890510193290}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: CherryMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +871,7 @@ GameObject:
   - component: {fileID: 6826147950667340594}
   - component: {fileID: 2115189750851363731}
   - component: {fileID: 2341561771521079600}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -930,7 +975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3993382124149067258}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: NPC_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +1010,7 @@ GameObject:
   - component: {fileID: 7971939091234783406}
   - component: {fileID: 6937718504950191478}
   - component: {fileID: 93350878044703318}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: IceMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1041,7 +1086,7 @@ GameObject:
   - component: {fileID: 894949965705606491}
   - component: {fileID: 4460169965201344797}
   - component: {fileID: 2128154693598514220}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9109405622785378928}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: OrderHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1252,6 +1297,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7849666650461683962, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: -7370156802671013846, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -1288,9 +1337,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: -5243915239741198979, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -4673037616924647551, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -1043745582733619316, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -259972160606440404, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
       propertyPath: m_Name
       value: HobbyHorse
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877630052265374745, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2766212503428324877, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687255752069928958, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7876023681238672744, guid: 8290dd138aafabe41bd5e58cc8c0db6c, type: 3}
       propertyPath: m_LocalScale.x

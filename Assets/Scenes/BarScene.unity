@@ -1333,7 +1333,7 @@ MonoBehaviour:
   respawnDelay: 3
   npcPrefab: {fileID: 1384759193446503928, guid: badf3b4c033010a42ae2629909123031, type: 3}
   npcSpawnPoint: {fileID: 1586402801}
-  maxNPC: 10
+  maxNPC: 1
   npcs: []
   minNpcSpawnDelay: 0
   maxNpcSpawnDelay: 1
@@ -2090,10 +2090,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 148613376800166008, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 3317548913577044963, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2137,7 +2133,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3054572770949689861, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2058785934}
   m_SourcePrefab: {fileID: 100100000, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
 --- !u!1 &856730764
 GameObject:
@@ -3474,6 +3473,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271670340}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1303967905 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2868675860717312838, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
+  m_PrefabInstance: {fileID: 796373066}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f566de69f0c412741962f9b8f4618339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1324876858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5089,6 +5099,24 @@ MonoBehaviour:
   - {fileID: 1586402801}
   claimed: 0
   owner: {fileID: 0}
+--- !u!1 &2058785929 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3054572770949689861, guid: a2014030b55aa0743aea29d2c0e7885a, type: 3}
+  m_PrefabInstance: {fileID: 796373066}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2058785934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058785929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff4c74b85325d734ca7235c13f417e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1303967905}
 --- !u!1 &2096735627
 GameObject:
   m_ObjectHideFlags: 0

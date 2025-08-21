@@ -16,7 +16,8 @@ public class NPC : MonoBehaviour
     private DrinkDataBase drinkDataBase;
     public GameObject player;
     public bool isDead;
-    public float currhealth;
+    public int currhealth;
+    public int bulletDamage; // Damage taken from a bullet
     [Header("Anger Properties")]
     public float angerLevel;
     public float angerCap;
@@ -34,7 +35,7 @@ public class NPC : MonoBehaviour
     public GameObject lemonMark, CherryMark, IceMark;
     public Image drinkImage, cupImage;
     public GameObject orderHolder;
-    
+
 
     [Header("Revolver Properties")]
     public GameObject revolverPrefab;
@@ -75,7 +76,7 @@ public class NPC : MonoBehaviour
         //Set path for npc to walk (enter and exit path)
         angerSlider.value = 1.0f; // Set the anger slider to max value
         npcPathFinding = GetComponent<NPCPathFinding>();
-        
+
     }
     /// <summary>
     /// updates angerlevel and checks if npc is hostile
@@ -199,12 +200,11 @@ public class NPC : MonoBehaviour
             Mathf.Abs(a.b - b.b) < tolerance;
         //Mathf.Abs(a.a - b.a) < tolerance;
     }
-    public void bulletHit(float damage)
+    public void bulletHit(int damage)
     {
         angerLevel = angerCap;
-        isHostile = true;
         if (isDead) return;
-        currhealth -= damage;
+        currhealth = (currhealth - damage);
         if (currhealth <= 0)
         {
             Die();
@@ -349,7 +349,6 @@ public class NPC : MonoBehaviour
     {
         Debug.Log(gameObject.name + " NPC has died.");
         coaster.GetComponent<Coaster>().releaseCoaster();
-        
         isDead = true;
         if (revolver != null)
         {
@@ -359,4 +358,6 @@ public class NPC : MonoBehaviour
         Destroy(gameObject); // Destroy the NPC GameObject
 
     }
+   
+
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a5cefdaad07d974a9e80a2949191594, type: 3}
   m_Name: NPCDefault
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 2
   angerIncrement: 0.25
   wrongDrinkIncrement: 1
   maxAngerCap: 10

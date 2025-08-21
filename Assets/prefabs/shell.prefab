@@ -98,11 +98,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ee1bc1abfdd6141903d4c4dcb2d15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  breakParticles: {fileID: 0}
+  smokeParticles: {fileID: 0}
+  drinkParticles: {fileID: 0}
+  collisionParticles: {fileID: 0}
   dropSound: {fileID: 8300000, guid: fd578ffb1cd8a554c92315163f8b3529, type: 3}
-  collisionThreshold: 0.5
+  breakSound: {fileID: 0}
   maxTimeBetweenDropSound: 0
   destroyAfterTime: 1
-  destroyAfter: 15
+  breakAble: 0
+  collisionThreshold: 0.5
+  destroyAfter: 5
+  breakThreshold: 0.5
+  drinkable: 0
+  drinkMinRotation: 120
+  drinkMaxRotation: 180
+  maxDrinkEmissionRate: 50
+  angle: 0
+  Spawnable: 0
+  OGGrabColliders: []
 --- !u!82 &-3675909925533484158
 AudioSource:
   m_ObjectHideFlags: 0
