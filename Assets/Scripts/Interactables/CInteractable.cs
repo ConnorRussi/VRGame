@@ -39,6 +39,9 @@ public class CInteractable : MonoBehaviour
     public bool Spawnable;
     public BoxCollider[] OGGrabColliders; // Colliders that are used to grab the object from spawner
 
+    [Header("coins")]
+    public int coinValue = 1; // How many coins this object is worth when collected
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();

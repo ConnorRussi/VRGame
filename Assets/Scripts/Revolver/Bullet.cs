@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 
     private Vector3 previousPosition;
     private Rigidbody rb;
+    public bool isHit = false;
 
     void Start()
     {
@@ -43,6 +44,8 @@ public class Bullet : MonoBehaviour
 
     private void OnHit(Collider collider, Vector3 hitPoint)
     {
+        if(isHit) return; // Prevent multiple hits
+        isHit = true;
         Debug.LogWarning("Bullet hit: " + collider.name);
         var cInteractable = collider.GetComponent<CInteractable>();
         if (cInteractable != null)
@@ -52,23 +55,41 @@ public class Bullet : MonoBehaviour
             }
            
         }
-        else
+        
+        switch (LayerMask.LayerToName(collider.gameObject.layer))
         {
             //use for damage on objects or play a hitsound
-            if(collider.TryGetComponent(out NPC npc))
+            case "NPC":
             {
+                NPC npc = collider.GetComponent<NPC>();
                 // If the NPC is hit, apply damage
                 npc.bulletHit(npc.bulletDamage);
                 Debug.Log("NPC hit by bullet, applying damage.");
+                break;
             }
-            else if (collider.TryGetComponent(out PlayerHead ph))
+            case "Body":
             {
-                Player player = ph.GetPlayer();
-                // If the Player is hit, apply damage
+                Player player = collider.GetComponent<ColliderRelay>().relay<Player>();
                 player.TakeDamage(player.bulletDamage);
-                Debug.Log("Player hit by bullet, applying damage.");
+                Debug.Log("PlayerHead hit by bullet, applying damage.");
+                break;
             }
+            case "Building":
+            {
+                Register register = collider.GetComponent<ColliderRelay>().relay<Register>();
+                if (register != null)
+                    {
+                        register.OpenRegister();
+                       
+                    }
+                break;
+            }
+            default:
+                Debug.Log("Bullet hit an object with layer: " + collider.gameObject.layer);
+                break;
         }
+           
+        
         Rigidbody targetRb = collider.GetComponent<Rigidbody>();
         if (targetRb != null)
         {

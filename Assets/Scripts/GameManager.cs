@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     //public List<GameObject> glassSpawns;
     public bool onDelays = false; // Flag to control the delay before respawning
     public float checkDelay; // Delay in seconds between checks for existing objects
-
+    
 
 
     [System.Serializable]
@@ -243,7 +243,7 @@ public class GameManager : MonoBehaviour
             while (npcs.Count < maxNPC)
             {
                 yield return new WaitForSeconds(Random.Range(minNpcSpawnDelay,maxNpcSpawnDelay)); // Wait for __ seconds before spawning a new NPC
-                if (!npcSpawnPoint.GetComponent<NavPoint>().claimed)
+                if (!npcSpawnPoint.GetComponent<NavPoint>().claimed && unclaimedCoasters.Count > 0) // Check if the spawn point is not claimed and there are unclaimed coasters
                 {
                     SpawnNPC();
                 }
