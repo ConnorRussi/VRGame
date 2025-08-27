@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-public class Register : MonoBehaviour
+public class Register : MonoBehaviour, IButtonInteractor
 {
     public GameObject registerDrawer; // Reference to the drawer GameObject
     Drawer drawer; // Reference to the Drawer script
@@ -49,10 +49,7 @@ public class Register : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("bullet"))
         {
-            if (drawer.isLocked)
-            {
                 OpenRegister();
-            }
         }
     }
     public void OpenRegister()
@@ -62,6 +59,10 @@ public class Register : MonoBehaviour
             drawer.ReleaseDrawer(); // Call the ReleaseDrawer method to open the drawer
             // isOpen = true; // Set isOpen to true
             // closed = false; // Set closed to false
+        }
+        else
+        {
+            Debug.Log("register is already open");
         }
     }
 
@@ -101,7 +102,10 @@ public class Register : MonoBehaviour
         Gizmos.matrix = Matrix4x4.TRS(boxCenter, transform.rotation, Vector3.one);
         Gizmos.DrawWireCube(Vector3.zero, boxHalfExtents * 2f);
     }
-
+    void IButtonInteractor.Activate()
+    {
+        OpenRegister();
+    }
 }
 
 
