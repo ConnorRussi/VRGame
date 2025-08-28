@@ -91,7 +91,7 @@ public class Register : MonoBehaviour, IButtonInteractor
         {
             // Optionally filter by tag/layer/component
             itemsToProcess.Push(col.gameObject);
-            totalValue += col.GetComponent<CInteractable>().coinValue;
+            totalValue = col.GetComponent<CInteractable>().coinValue + totalValue;
             valueText.text = "$" + totalValue.ToString();
             Destroy(col.gameObject, 1f); // destroy after 2 seconds
         }

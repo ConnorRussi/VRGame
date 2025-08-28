@@ -1537,6 +1537,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e6e6a66e3f3516c46a79d6587f637a87, type: 3}
   - {fileID: 21300000, guid: c28d0e78288a4b1448efea6e4d7f3a6c, type: 3}
   fillThreshold: 0.75
+  basePrices: 0100000001000000010000000100000001000000020000000200000002000000
   drinkList: []
 --- !u!4 &385031780
 Transform:
@@ -1604,7 +1605,7 @@ MonoBehaviour:
   npcs: []
   minNpcSpawnDelay: 3
   maxNpcSpawnDelay: 6
-  spawning: 0
+  spawning: 1
 --- !u!1 &401090941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 460964500252380937, guid: 6ac7d3f803983234da40d1c167bff945, type: 3}
@@ -7061,18 +7062,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BeerTap
       objectReference: {fileID: 0}
-    - target: {fileID: 6724538843438734404, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.38431373
-      objectReference: {fileID: 0}
-    - target: {fileID: 6724538843438734404, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.7137255
-      objectReference: {fileID: 0}
-    - target: {fileID: 6724538843438734404, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.90588236
-      objectReference: {fileID: 0}
     - target: {fileID: 8019962057858461823, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.514
@@ -7112,10 +7101,6 @@ PrefabInstance:
     - target: {fileID: 8019962057858461823, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8019962057858461823, guid: 9f66e0ae9ba51d744871e0740f504332, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

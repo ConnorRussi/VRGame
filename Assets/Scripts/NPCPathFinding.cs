@@ -38,9 +38,9 @@ public class NPCPathFinding : MonoBehaviour
         return false; // Still moving
     }
     public System.Collections.IEnumerator PathFindIn()
-    { 
+    {
         path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
-       // Debug.Log("Starting pathfinding for NPC: " + gameObject.name);
+                                                                               // Debug.Log("Starting pathfinding for NPC: " + gameObject.name);
         while (!reachedEnd)
         {
             yield return new WaitForFixedUpdate(); // Wait for the next physics update
@@ -67,7 +67,7 @@ public class NPCPathFinding : MonoBehaviour
                 yield return null; // Wait for the next frame if not moving
             }
         }
-       // Debug.Log("end of pathfinding for NPC: " + gameObject.name);
+        // Debug.Log("end of pathfinding for NPC: " + gameObject.name);
         reachedEnd = true; // Set the flag to true when the end of the path is
     }
     public System.Collections.IEnumerator PathFindOut()
@@ -84,7 +84,8 @@ public class NPCPathFinding : MonoBehaviour
                 if (currentWaypointIndex == 0)
                 {
                     //Debug.Log(gameObject.name + " has reached the end of the path, exit.");
-                    
+                    path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
+                    reachedEnd = true;
                     npc.Die();
                     yield break; // Exit the coroutine
                 }
@@ -95,7 +96,7 @@ public class NPCPathFinding : MonoBehaviour
                 //path[currentWaypointIndex].GetComponent<NavPoint>().release();
                 currentWaypointIndex--;
 
-                
+
                 path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
 
             }
@@ -104,6 +105,26 @@ public class NPCPathFinding : MonoBehaviour
                 yield return null; // Wait for the next frame if not moving
             }
         }
-       
+
     }
+
+
+    public void ForceReleaseNavPoints()
+    {   Debug.Log("Force releasing nav points for NPC: " + gameObject.name);
+        if (currentWaypointIndex < path.Length && currentWaypointIndex >= 0)
+        {
+            NavPoint point = path[currentWaypointIndex].GetComponent<NavPoint>();
+            if(point == null)
+            {
+                Debug.LogError("NavPoint component is missing on waypoint: " + path[currentWaypointIndex].name);
+                return;
+            }
+            if (point.claimed && point.owner == gameObject) path[currentWaypointIndex].GetComponent<NavPoint>().release();
+        }
+        
+            
+        
+    } 
+
+
 }

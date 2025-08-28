@@ -55,6 +55,7 @@ public class NPC : MonoBehaviour
     private NPCPathFinding npcPathFinding;
     public GameObject coaster;
     public bool isPathing = false;
+    public bool acceptedDrink = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -187,18 +188,22 @@ public class NPC : MonoBehaviour
         }
     }
     void AcceptDrink(GameObject cupObject, Cup cup) {
+        if (!acceptedDrink)
+        {
+            acceptedDrink = true;
             Debug.Log("The drink matches the NPC's order.");
             // Logic for when the drink matches the order
             cupObject.GetComponent<CInteractable>().Break();
             //give coins, set up for different coin amounts later EX: diff colors for diff values
             GameObject currCoin = Instantiate(CoinPrefab, coaster.GetComponent<Coaster>().spawnPoint.transform.position, Quaternion.identity);
-            currCoin.GetComponent<CInteractable>().coinValue = (int)Math.Round(myOrder.drink.basePrice * (angerLevel/angerCap)) + defaults.iceValue + defaults.cherryValue + defaults.lemonValue;
+            currCoin.GetComponent<CInteractable>().coinValue = (int)Math.Round(myOrder.drink.basePrice * (angerLevel / angerCap)) + defaults.iceValue + defaults.cherryValue + defaults.lemonValue;
             //set to leave and have leave on path
             isPathing = true;
             isHostile = false;
             orderHolder.SetActive(false); // Hide the order holder UI
 
             StartCoroutine(npcPathFinding.PathFindOut());
+        }
     }
     /// <summary>
     /// Checks if two colors are close enough to be considered a match.
@@ -217,7 +222,7 @@ public class NPC : MonoBehaviour
     public void bulletHit(int damage)
     {
         angerLevel = angerCap;
-        if (isDead) return;
+        if (isDead) Debug.LogWarning("NPC is already dead, bullet hit should not be processed.");
         currhealth = (currhealth - damage);
         if (currhealth <= 0)
         {
@@ -363,12 +368,18 @@ public class NPC : MonoBehaviour
     {
         Debug.Log(gameObject.name + " NPC has died.");
         //forces wait until released before death
-        bool released = coaster.GetComponent<Coaster>().releaseCoaster();
-        //NOT REALEASING NAV POINTS BEFORE DEATH
-        if (!released)
+        if (coaster != null)
         {
-            Debug.LogWarning("Failed to release coaster on NPC death: " + gameObject.name);
+            bool released = coaster.GetComponent<Coaster>().releaseCoaster();
+
+            if (!released)
+            {
+                Debug.LogWarning("Failed to release coaster on NPC death: " + gameObject.name);
+            }
         }
+        //NOT REALEASING NAV POINTS BEFORE DEATH
+        npcPathFinding.ForceReleaseNavPoints();
+        
         isDead = true;
         if (revolver != null)
         {

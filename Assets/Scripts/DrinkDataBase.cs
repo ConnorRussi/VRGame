@@ -15,6 +15,7 @@ public class DrinkDataBase : MonoBehaviour
     public Sprite[] cupSprites;
     public Sprite[] bottleSprites;
     public float fillThreshold = 0.75f;
+    public int[] basePrices;
 
     [System.Serializable]
     public struct Drink
@@ -43,7 +44,8 @@ public class DrinkDataBase : MonoBehaviour
                 cherryAllowed = cherryAllowed[i],
                 lemonAllowed = lemonAllowed[i],
                 cupSprite = cupSprites[i],
-                bottleSprite = bottleSprites[i]
+                bottleSprite = bottleSprites[i],
+                basePrice = basePrices[i]
             };
             drinkList.Add(newDrink);
         }

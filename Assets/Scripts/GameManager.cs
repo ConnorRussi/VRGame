@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
     }
     public void Start()
     {
-      if(spawning)StartCoroutine(NPCManagment()); // Start managing NPCs
+        if (spawning) StartCoroutine(NPCManagment()); // Start managing NPCs
         dayNightButton.SetActive(false); // Hide the day/night button at the start
         npcsToday = startingNPCs;
         currentTime = timeOfDay.Day;
@@ -311,7 +311,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
             difficultyScale *= day;
             todayNPCsSpawned = 0;
             spawning = true;
-            dayNightButton.SetActive(false);
+            Invoke("turnOffDayButton", 3f); // Hide the day/night button after a short delay
 
             StartCoroutine(NPCManagment()); // Restart managing NPCs for the new day
         }
@@ -319,5 +319,9 @@ public class GameManager : MonoBehaviour, IButtonInteractor
         {
             Debug.LogError("Day/Night button activated but it is already day. This should not happen.");
         }
+    }
+    public void turnOffDayButton()
+    {
+        dayNightButton.SetActive(false);
     }
 }

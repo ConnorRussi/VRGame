@@ -7,9 +7,14 @@ public class Spout : MonoBehaviour
     public float angle, maxPourAngle;
     public float checkDelay;
     public bool canPour;
+    public bool pouring;
+    public AudioSource audioSource;
+    public AudioClip pourSound;
+    //public AudioClip loopingPourSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         DrinkCoroutine();
     }
 
@@ -49,25 +54,29 @@ public class Spout : MonoBehaviour
             var drinkEmission = drinkParticles.emission;
             var collisionEmission = collisionParticles.emission;
             angle = lever.angle;
-            if (angle < maxPourAngle)
+            bool isPouring = angle < maxPourAngle;
+
+            if (isPouring)
             {
-                //Debug.Log("Pouring drink at angle: " + angle);
-              
-                //drinkParticles.Play();
                 drinkEmission.rateOverTime = 20f;
-                //collisionParticles.Play();
                 collisionEmission.rateOverTime = 5f;
-            
+
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.clip = pourSound;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                }
             }
             else
             {
-                //Debug.Log("not Pouring drink at angle: " + angle);
-                
-                //drinkParticles.Stop();
                 drinkEmission.rateOverTime = 0f;
-                //collisionParticles.Stop();
                 collisionEmission.rateOverTime = 0f;
-                
+
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
             }
         }
         //Debug.Log("Checking drink particles angle: " + angle + " with minPourAngle: " + maxPourAngle + " - " + (angle > maxPourAngle ? "Pouring" : "Not Pouring"));

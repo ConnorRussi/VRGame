@@ -157,7 +157,7 @@ public class CInteractable : MonoBehaviour
     /// <param name="sound"></param>
     void PlaySound(AudioClip sound)
     {
-        Debug.Log(gameObject.name + " played sound: " + sound.name);
+        //Debug.Log(gameObject.name + " played sound: " + sound.name);
         audioSource.PlayOneShot(sound);
         allowedPlaySound = false;
         Invoke("ResetAllowedPlaySound", maxTimeBetweenDropSound);
