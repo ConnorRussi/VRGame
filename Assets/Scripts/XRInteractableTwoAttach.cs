@@ -6,11 +6,12 @@ public class XRInteractableTwoAttach : XRGrabInteractable
 {
     public Transform leftAttachPoint;
     public Transform rightAttachPoint;
+    public bool debug = false;
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
-        Debug.Log("override OnSelectEntered called" + args.interactableObject.transform.name +" " + args.interactorObject.transform.tag);
-        
-       if (args.interactorObject.transform.CompareTag("Left Hand"))
+        if(debug) Debug.Log("override OnSelectEntered called" + args.interactableObject.transform.name + " " + args.interactorObject.transform.tag);
+
+        if (args.interactorObject.transform.CompareTag("Left Hand"))
         {
             attachTransform = leftAttachPoint;
         }

@@ -24,6 +24,8 @@ public class RevolverShoot : MonoBehaviour
     public bool leftHand;
     public bool rightHand;
     public bool cylinderOpened = false;
+
+    public bool debug = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created    
     void Start()
     {
@@ -125,7 +127,7 @@ public class RevolverShoot : MonoBehaviour
                 Debug.LogWarning("Interactor does not have a recognized tag.");
             }
             grabbingXRController = interactorObj.GetComponent<ActionBasedController>();
-            Debug.Log("Grabbed by: " + interactorObj.name);
+            if(debug)Debug.Log("Grabbed by: " + interactorObj.name);
         }
         else
         {
@@ -161,7 +163,7 @@ public class RevolverShoot : MonoBehaviour
     void MoveCylinder()
     {
         cylinderOpened = true;
-        Debug.Log("Cylinder opened!");
+        if(debug)Debug.Log("Cylinder opened!");
         revolverSC.OpenCylinder(leftHand);
         // Put your cylinder opening logic here
     }

@@ -14,6 +14,7 @@ public class DrinkDataBase : MonoBehaviour
     public bool[] lemonAllowed;
     public Sprite[] cupSprites;
     public Sprite[] bottleSprites;
+    public float fillThreshold = 0.75f;
 
     [System.Serializable]
     public struct Drink
@@ -24,6 +25,7 @@ public class DrinkDataBase : MonoBehaviour
         public bool iceAllowed, cherryAllowed, lemonAllowed;
         public Sprite cupSprite;
         public Sprite bottleSprite;
+        public int basePrice;
     }
 
     public List<Drink> drinkList = new List<Drink>();

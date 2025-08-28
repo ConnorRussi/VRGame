@@ -21,9 +21,12 @@ public class Button : MonoBehaviour
     private bool hasActivated = false; // Prevent multiple activations per press
     public GameObject objectToActivate;
     private IButtonInteractor interactorScript;
-
+    public AudioSource audioSource;
+    public AudioClip buttonPressSound;
+    public bool debugMode = false;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         initialLocalPos = visualTarget.localPosition;
         interactorScript = objectToActivate?.GetComponent<IButtonInteractor>();
         if (objectToActivate != null && interactorScript == null)
@@ -88,7 +91,8 @@ public class Button : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Button Activated: " + gameObject.name);
+                    if(debugMode)Debug.Log("Button Activated: " + gameObject.name);
+                    audioSource.PlayOneShot(buttonPressSound);
                     interactorScript.Activate(); // Pass this button or any object you want
                 }
 

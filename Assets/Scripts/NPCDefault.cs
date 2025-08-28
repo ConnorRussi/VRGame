@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPCDefault", menuName = "Scriptable Objects/NPCDefault")]
 public class NPCDefault : ScriptableObject
 {
-    public int maxHealth;
-    public float angerIncrement, wrongDrinkIncrement, maxAngerCap, minAngerCap;
+    public int maxHealth, iceValue, cherryValue, lemonValue;
+    public float wrongDrinkIncrement, maxAngerCap, minAngerCap;
     
     
 }

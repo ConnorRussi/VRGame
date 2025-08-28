@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     private Vector3 previousPosition;
     private Rigidbody rb;
     public bool isHit = false;
+    public bool debug = false;
 
     void Start()
     {
@@ -46,7 +47,7 @@ public class Bullet : MonoBehaviour
     {
         if(isHit) return; // Prevent multiple hits
         isHit = true;
-        Debug.LogWarning("Bullet hit: " + collider.name);
+        if(debug)Debug.LogWarning("Bullet hit: " + collider.name);
         var cInteractable = collider.GetComponent<CInteractable>();
         if (cInteractable != null)
         {   if (cInteractable.breakAble)
@@ -64,14 +65,14 @@ public class Bullet : MonoBehaviour
                 NPC npc = collider.GetComponent<NPC>();
                 // If the NPC is hit, apply damage
                 npc.bulletHit(npc.bulletDamage);
-                Debug.Log("NPC hit by bullet, applying damage.");
+                if(debug)Debug.Log("NPC hit by bullet, applying damage.");
                 break;
             }
             case "Body":
             {
                 Player player = collider.GetComponent<ColliderRelay>().relay<Player>();
                 player.TakeDamage(player.bulletDamage);
-                Debug.Log("PlayerHead hit by bullet, applying damage.");
+                if(debug)Debug.Log("PlayerHead hit by bullet, applying damage.");
                 break;
             }
             case "Building":
@@ -85,7 +86,7 @@ public class Bullet : MonoBehaviour
                 break;
             }
             default:
-                Debug.Log("Bullet hit an object with layer: " + collider.gameObject.layer);
+                if(debug)Debug.Log("Bullet hit an object with layer: " + collider.gameObject.layer);
                 break;
         }
            

@@ -32,6 +32,7 @@ public class Revolver : MonoBehaviour
     public ParticleSystem muzzleFlash, flash;
     public AudioSource revAudioSource;
     public AudioClip revolverFire;
+    public bool debug = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -122,7 +123,7 @@ public class Revolver : MonoBehaviour
     /// </summary>
     public void Reload()
     {
-        Debug.Log("Reload called");
+        if(debug)Debug.Log("Reload called");
         currentAmmo = maxAmmo;
         for (int i = 0; i < bullets.Length; i++)
         {
@@ -137,7 +138,7 @@ public class Revolver : MonoBehaviour
     /// <param name="leftHanded"></param>
     public void OpenCylinder(bool leftHanded)
     {
-        Debug.Log("managing cylinder");
+        if(debug)Debug.Log("managing cylinder");
         if (cylinderOpen)
         {
             //logic to close the cylinder since already open
@@ -148,7 +149,7 @@ public class Revolver : MonoBehaviour
         }
         readyToFire = false;
         cylinderOpen = true;
-        Debug.Log("Open Cylinder called");
+        if(debug)Debug.Log("Open Cylinder called");
         if (leftHanded) cylinder.transform.localPosition = new UnityEngine.Vector3(cylinder.transform.localPosition.x, cylinder.transform.localPosition.y, 0.03f);
         else cylinder.transform.localPosition = new UnityEngine.Vector3(cylinder.transform.localPosition.x, cylinder.transform.localPosition.y, -0.03f);
 
@@ -161,7 +162,7 @@ public class Revolver : MonoBehaviour
     /// </summary>
     public void Holster()
     {
-        Debug.Log("Holster called");
+        if(debug)Debug.Log("Holster called");
         Reload();
         cylinder.transform.localPosition = new UnityEngine.Vector3(cylinder.transform.localPosition.x, cylinder.transform.localPosition.y, 0f);
 
@@ -172,7 +173,7 @@ public class Revolver : MonoBehaviour
     /// </summary>
     public void UnHolster()
     {
-        Debug.Log("UnHolster called");
+        if(debug)Debug.Log("UnHolster called");
         //was turned off not sure why i re enabled it as of 7/20/25 if problem turn it back off
         readyToFire = true;
     }

@@ -39,7 +39,7 @@ public class NPCPathFinding : MonoBehaviour
     }
     public System.Collections.IEnumerator PathFindIn()
     { 
-        path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+        path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
        // Debug.Log("Starting pathfinding for NPC: " + gameObject.name);
         while (!reachedEnd)
         {
@@ -59,7 +59,7 @@ public class NPCPathFinding : MonoBehaviour
                     StartCoroutine(npc.UpdateAngerLevel());
                     yield break; // Exit the coroutine
                 }
-                path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+                path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
 
             }
             else
@@ -74,13 +74,20 @@ public class NPCPathFinding : MonoBehaviour
     {
         currentWaypointIndex--; // Start from the last waypoint
         reachedEnd = false; // Reset the flag for the return path
-        path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+        path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
 
         while (!reachedEnd)
         {
             yield return new WaitForFixedUpdate(); // Wait for the next physics update
             if (MoveTowardsWaypoint())
             {
+                if (currentWaypointIndex == 0)
+                {
+                    //Debug.Log(gameObject.name + " has reached the end of the path, exit.");
+                    
+                    npc.Die();
+                    yield break; // Exit the coroutine
+                }
                 if (!path[currentWaypointIndex - 1].GetComponent<NavPoint>().claimed)
                 {
                     path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
@@ -88,14 +95,8 @@ public class NPCPathFinding : MonoBehaviour
                 //path[currentWaypointIndex].GetComponent<NavPoint>().release();
                 currentWaypointIndex--;
 
-                if (currentWaypointIndex < 0)
-                {
-                    //Debug.Log(gameObject.name + " has reached the end of the path, exit.");
-                    
-                    npc.Die();
-                    yield break; // Exit the coroutine
-                }
-                path[currentWaypointIndex].GetComponent<NavPoint>().claim(); // Claim the current waypoint
+                
+                path[currentWaypointIndex].GetComponent<NavPoint>().claim(gameObject); // Claim the current waypoint
 
             }
             else

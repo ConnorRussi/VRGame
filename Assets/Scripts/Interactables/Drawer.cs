@@ -112,6 +112,7 @@ public class Drawer : MonoBehaviour
     {
         
         Debug.Log("Locking drawer");
+        register.audioSource.PlayOneShot(register.registerCloseSound);
         // snap back into place
         transform.localPosition = closedLocalPos;
 

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7501398469557411483}
   - component: {fileID: 4526989174714738600}
   - component: {fileID: 7374852225852695376}
-  - component: {fileID: 2274374464564726047}
   m_Layer: 3
   m_Name: Cherry
   m_TagString: Cherry
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2030171470960222522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.499, y: 0.6, z: 0.9606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -69,7 +68,8 @@ MonoBehaviour:
   angle: 0
   Spawnable: 0
   OGGrabColliders:
-  - {fileID: 2274374464564726047}
+  - {fileID: 0}
+  coinValue: 1
 --- !u!54 &7501398469557411483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,27 +270,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &2274374464564726047
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030171470960222522}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.924632, y: 1, z: 1.5170908}
-  m_Center: {x: -0.21231577, y: 0, z: -0.16550541}
 --- !u!1 &4522360206302315186
 GameObject:
   m_ObjectHideFlags: 0

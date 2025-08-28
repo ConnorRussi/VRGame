@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public int bulletDamage = 1; // Damage taken from a bullet
     public Animator[] healthNodes; // Animators for different health 
     public bool hurt, heal;
+    public bool debug = false;
     public void Start()
     {
         health = maxHealth;
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
     {
         health -= damage;
         healthNodes[health].SetTrigger("TakeDamage");
-        Debug.Log("Player took damage, current health: " + health);
+        if(debug)Debug.Log("Player took damage, current health: " + health);
 
         if (health <= 0)
         {
@@ -50,7 +51,7 @@ public class Player : MonoBehaviour
             health = healthNodes.Length - 1; // Cap health to the maximum number of nodes
         }
         
-        Debug.Log("Player healed, current health: " + health);
+        if(debug)Debug.Log("Player healed, current health: " + health);
     }
     public void Die()
     {

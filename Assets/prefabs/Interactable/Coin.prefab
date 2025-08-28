@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 3734501848682447043}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.814, y: 0.799, z: -0.344}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -160,9 +160,9 @@ MonoBehaviour:
   smokeParticles: {fileID: 0}
   drinkParticles: {fileID: 0}
   collisionParticles: {fileID: 0}
-  dropSound: {fileID: 0}
+  dropSound: {fileID: 8300000, guid: bb5505f922cdf934aa69b249118a10e3, type: 3}
   breakSound: {fileID: 0}
-  maxTimeBetweenDropSound: 0
+  maxTimeBetweenDropSound: 0.25
   destroyAfterTime: 0
   breakAble: 0
   collisionThreshold: 0
@@ -173,8 +173,6 @@ MonoBehaviour:
   drinkMaxRotation: 180
   maxDrinkEmissionRate: 50
   angle: 0
-  Spawnable: 0
-  OGGrabColliders: []
   coinValue: 1
 --- !u!54 &2474912783646139526
 Rigidbody:

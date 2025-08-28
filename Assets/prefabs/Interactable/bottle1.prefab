@@ -9814,6 +9814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mesh: {fileID: 6575046367890256505}
+  otherMeshes: []
   breakParticles: {fileID: 2875108287959605109}
   smokeParticles: {fileID: 0}
   drinkParticles: {fileID: 550237140932455027}
@@ -9831,8 +9832,9 @@ MonoBehaviour:
   drinkMaxRotation: 180
   maxDrinkEmissionRate: 30
   angle: 0
-  Spawnable: 0
-  OGGrabColliders: []
+  coinValue: 1
+  debug: 0
+  callBreak: 0
 --- !u!114 &3750060782563060402
 MonoBehaviour:
   m_ObjectHideFlags: 0

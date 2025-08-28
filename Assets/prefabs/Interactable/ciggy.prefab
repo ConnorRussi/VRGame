@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7216084714282195100}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: attachpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4516366608022153885}
   - component: {fileID: 6508895819826048561}
   - component: {fileID: 8040791999603745053}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: ciggy
   m_TagString: MouthWearable
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 4214002631521525427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.555, y: 0.759, z: 0.243}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.49999997, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -286,15 +286,22 @@ MonoBehaviour:
   mesh: {fileID: 8986385587767442401}
   breakParticles: {fileID: 0}
   smokeParticles: {fileID: 6722034660112661229}
+  drinkParticles: {fileID: 0}
+  collisionParticles: {fileID: 0}
   dropSound: {fileID: 0}
   breakSound: {fileID: 0}
-  collisionThreshold: 0
   maxTimeBetweenDropSound: 0
   destroyAfterTime: 0
   breakAble: 0
-  equipable: 1
+  collisionThreshold: 0
   destroyAfter: 0
   breakThreshold: 0.5
+  drinkable: 0
+  drinkMinRotation: 120
+  drinkMaxRotation: 180
+  maxDrinkEmissionRate: 50
+  angle: 0
+  coinValue: 1
 --- !u!1 &6945819953450651809
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 928478347248994728}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: wrapper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5009610488871275936, guid: d69e2b0a3be9e8344b045125214530b5, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7240326737296346284, guid: d69e2b0a3be9e8344b045125214530b5, type: 3}
       propertyPath: playOnAwake
@@ -533,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1c38906ad618f06409a3bc2097e030d2, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

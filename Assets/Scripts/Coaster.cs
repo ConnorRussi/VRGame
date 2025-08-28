@@ -8,11 +8,13 @@ public class Coaster : MonoBehaviour
     float timeBetweenCupCheck = 0.75f; // Time to wait before checking if the cup is placed correctly
     public NPC owner;
     public GameObject wrapper;
+    public GameObject spawnPoint;
 
 
     //make non changable later
     public GameObject[] path;
     public GameManager gameManager;
+    public bool debug = false;
 
 
     /// <summary>
@@ -31,31 +33,32 @@ public class Coaster : MonoBehaviour
         claimed = true;
         owner = npc;
         npc.currentCoaster = this;
-        wrapper.SetActive(true); 
+        wrapper.SetActive(true);
         // foreach (Transform child in transform) // HIGHLIGHT
         // {
         //     child.gameObject.SetActive(true); // HIGHLIGHT
         // }
-        Debug.Log("Coaster claimed by: " + owner.name);
+        if (debug) Debug.Log("Coaster claimed by: " + owner.name);
     }
-/// <summary>
-/// Releases the coaster from the NPC.
-/// If the coaster is not claimed, it logs a warning.
-/// </summary>
-    public void releaseCoaster()
+    /// <summary>
+    /// Releases the coaster from the NPC.
+    /// If the coaster is not claimed, it logs a warning.
+    /// </summary>
+    public bool releaseCoaster()
     {
         if (!claimed)
         {
             Debug.LogWarning("Coaster is not claimed, cannot release.");
-            return;
+            return false;
         }
 
-        Debug.Log("Releasing coaster from: " + owner.name);
+        if (debug) Debug.Log("Releasing coaster from: " + owner.name);
         claimed = false;
         owner.currentCoaster = null;
         owner = null;
         gameManager.unclaimedCoasters.Add(gameObject); // Add the coaster back to the unclaimed list
         wrapper.SetActive(false); // Optionally deactivate the coaster
+        return true;
     }
 /// <summary>
 /// Handles the trigger event when a cup enters the coaster's collider.
@@ -66,7 +69,7 @@ public class Coaster : MonoBehaviour
     {
         if (other.GetComponent<Cup>() == null)
         {
-            Debug.Log("Coaster triggered by non-cup object: " + other.name);
+            if(debug)Debug.Log("Coaster triggered by non-cup object: " + other.name);
             return;
         }
         if (claimed)
@@ -107,7 +110,7 @@ public class Coaster : MonoBehaviour
         }
         else
         {
-            Debug.Log("Cup was not left on the coaster or is still being held.");
+            if(debug)Debug.Log("Cup was not left on the coaster or is still being held.");
         }
     }
     

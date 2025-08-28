@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class CInteractable : MonoBehaviour
 {
     public GameObject mesh;
+    public GameObject[] otherMeshes; // Other meshes to disable when broken, like liquid in a cup
     Rigidbody rb;
     [Header("Particle Systems")]
     public ParticleSystem breakParticles;
@@ -35,12 +36,15 @@ public class CInteractable : MonoBehaviour
     public float maxDrinkEmissionRate = 50f;    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public float angle;
 
-    [Header("Spawnable Objects")]
-    public bool Spawnable;
-    public BoxCollider[] OGGrabColliders; // Colliders that are used to grab the object from spawner
+    //[Header("Spawnable Objects")]
+    //public bool Spawnable;
+    //public BoxCollider[] OGGrabColliders; // Colliders that are used to grab the object from spawner
 
     [Header("coins")]
     public int coinValue = 1; // How many coins this object is worth when collected
+    [Header("debug")]
+    public bool debug = false;
+    public bool callBreak = false;
 
     void Start()
     {
@@ -55,7 +59,6 @@ public class CInteractable : MonoBehaviour
         {
             drinkEmission = drinkParticles.emission;
         }
-        SpawnableObjectTransition(Spawnable);
         if (maxTimeBetweenDropSound <= 0)
         {
             maxTimeBetweenDropSound = 1.0f; // Default value to prevent division by zero
@@ -68,7 +71,7 @@ public class CInteractable : MonoBehaviour
     public void FixedUpdate()
     {
         if (drinkable) Drink();
-
+        if(debug && callBreak)Break();
 
     }
     /// <summary>
@@ -154,7 +157,7 @@ public class CInteractable : MonoBehaviour
     /// <param name="sound"></param>
     void PlaySound(AudioClip sound)
     {
-        //Debug.Log(gameObject.name + " played sound: " + sound.name);
+        Debug.Log(gameObject.name + " played sound: " + sound.name);
         audioSource.PlayOneShot(sound);
         allowedPlaySound = false;
         Invoke("ResetAllowedPlaySound", maxTimeBetweenDropSound);
@@ -183,6 +186,10 @@ public class CInteractable : MonoBehaviour
             PlaySound(breakSound);
         }
         mesh.SetActive(false);
+        foreach (GameObject m in otherMeshes)
+        {
+            m.SetActive(false);
+        }
         gameObject.GetComponent<Collider>().enabled = false;
         //Destroy(gameObject);
         gameObject.GetComponent<XRGrabInteractable>().enabled = false;
@@ -216,16 +223,5 @@ public class CInteractable : MonoBehaviour
         // if(gameObject.GetComponent<Collider>() != null)  
         //     gameObject.GetComponent<Collider>().enabled = true;
     }
-    public void SpawnableObjectTransition(bool waitingToBeGrabbed)
-    {
-        foreach (BoxCollider collider in OGGrabColliders)
-        {
-            collider.enabled = waitingToBeGrabbed;
-        }
-        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-        //rb.mass = waitingToBeGrabbed ? 1 : int.MaxValue; // Lighter when waiting to be grabbed
-        rb.useGravity = !waitingToBeGrabbed; // Disable gravity when waiting to be grabbed
-        rb.isKinematic = waitingToBeGrabbed; // Make kinematic when waiting to be grabbed
-
-    }
+   
 }

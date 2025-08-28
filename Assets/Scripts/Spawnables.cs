@@ -61,7 +61,8 @@ public class Spawnables : MonoBehaviour
             return; // Prevent spawning if already on delay
         }
         onDelays = true;
-        currentSpawnedObject.GetComponent<CInteractable>().SpawnableObjectTransition(false);
+        //*******TURNED OFF TO CHANGE SPAWNERS
+        //currentSpawnedObject.GetComponent<CInteractable>().SpawnableObjectTransition(false);
         // Disable the colliders used for grabbing the object from the spawner
         Invoke("SpawnObject", spawnDelay);
     }
@@ -70,7 +71,8 @@ public class Spawnables : MonoBehaviour
         currentSpawnedObject = Instantiate(spawnablePrefab, spawnPoint.position, spawnPoint.rotation);
 
         XRGrabInteractable grabInteractable = currentSpawnedObject.GetComponent<XRGrabInteractable>();
-        currentSpawnedObject.GetComponent<CInteractable>().SpawnableObjectTransition(true);
+        //*******TURNED OFF TO CHANGE SPAWNERS
+        //currentSpawnedObject.GetComponent<CInteractable>().SpawnableObjectTransition(true);
         if (grabInteractable != null)
         {
             grabInteractable.selectEntered.AddListener(SpawnedObjectGrabbed);

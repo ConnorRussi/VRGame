@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3842476044377994851}
   - component: {fileID: 2394352637295796456}
   - component: {fileID: 128982836824418624}
-  - component: {fileID: 1862850957599068320}
   - component: {fileID: 2609872702810610427}
   m_Layer: 3
   m_Name: Lemon
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2922226541879949974}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.60006, y: 0.765, z: 0.66329}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -246,30 +245,7 @@ MonoBehaviour:
   drinkMaxRotation: 180
   maxDrinkEmissionRate: 50
   angle: 0
-  Spawnable: 0
-  OGGrabColliders:
-  - {fileID: 1862850957599068320}
---- !u!65 &1862850957599068320
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2922226541879949974}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.1, z: 0.005604446}
-  m_Center: {x: 0, y: 0, z: -0.00036624074}
+  coinValue: 1
 --- !u!65 &2609872702810610427
 BoxCollider:
   m_ObjectHideFlags: 0

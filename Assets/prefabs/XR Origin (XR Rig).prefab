@@ -119,6 +119,7 @@ MonoBehaviour:
   - {fileID: 636017288071238020}
   hurt: 0
   heal: 0
+  debug: 0
 --- !u!1 &671406610022983333
 GameObject:
   m_ObjectHideFlags: 0

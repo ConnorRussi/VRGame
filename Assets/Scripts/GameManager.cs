@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IButtonInteractor
 {
     public GameObject MugSpawnHolder, GlassSpawnHolder, bottleSpawnHolder, respawnAbleBottleSpawner;
     public GameObject MugPrefab, glassPrefab;
@@ -13,7 +13,18 @@ public class GameManager : MonoBehaviour
     //public List<GameObject> glassSpawns;
     public bool onDelays = false; // Flag to control the delay before respawning
     public float checkDelay; // Delay in seconds between checks for existing objects
-    
+    [Header("day and night cycle")]
+    public int day;
+    public enum timeOfDay { Day, Night };
+    public timeOfDay currentTime;
+    public int startingNPCs;
+    public float NPCsScaleFactor; // How much to scale the number of NPCs by each day
+    public int npcsToday;
+    public int todayNPCsSpawned;
+    public GameObject dayNightButton;
+    public float difficultyScale = 0.3f; // How much to scale the difficulty by each day
+    //CHANGE
+
 
 
     [System.Serializable]
@@ -39,7 +50,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> npcs = new List<GameObject>(); // List to hold spawned NPCs
     public float minNpcSpawnDelay, maxNpcSpawnDelay = 3.0f; // Delay between NPC spawns
     public bool spawning = true; // Flag to control the spawning process
-    
+
 
 
     void Awake()
@@ -53,7 +64,15 @@ public class GameManager : MonoBehaviour
     }
     public void Start()
     {
-        StartCoroutine(NPCManagment()); // Start managing NPCs
+      if(spawning)StartCoroutine(NPCManagment()); // Start managing NPCs
+        dayNightButton.SetActive(false); // Hide the day/night button at the start
+        npcsToday = startingNPCs;
+        currentTime = timeOfDay.Day;
+        if (NPCsScaleFactor <= 1)
+        {
+            Debug.LogError("NPCsScaleFactor must be greater than 1 to increase NPCs each day. Setting to default value of 1.1");
+            NPCsScaleFactor = 1.1f; // Set a default value to prevent
+        }
     }
     /// <summary>
     /// Finds all coasters in the scene and stores them in the coasters list.
@@ -231,25 +250,74 @@ public class GameManager : MonoBehaviour
         npc.GetComponent<NPC>().gameManager = this; // Set the GameManager reference in each NPC
         npcs.Add(npc);
         Debug.Log("Spawned NPC: " + npc.name);
-        
-        
-        
+
+
+
     }
     System.Collections.IEnumerator NPCManagment()
     {
+        Debug.Log("Starting NPC management");
         while (spawning)
         {
             yield return new WaitForSeconds(1f); // Wait for 1 second before checking again
+            Debug.Log("spawning");
             while (npcs.Count < maxNPC)
             {
-                yield return new WaitForSeconds(Random.Range(minNpcSpawnDelay,maxNpcSpawnDelay)); // Wait for __ seconds before spawning a new NPC
+                Debug.Log("not at max count");
+                yield return new WaitForSeconds(Random.Range(minNpcSpawnDelay, maxNpcSpawnDelay)); // Wait for __ seconds before spawning a new NPC
                 if (!npcSpawnPoint.GetComponent<NavPoint>().claimed && unclaimedCoasters.Count > 0) // Check if the spawn point is not claimed and there are unclaimed coasters
                 {
+                    todayNPCsSpawned++;
+                    if (todayNPCsSpawned > npcsToday && currentTime == timeOfDay.Day)
+                    {
+                        spawning = false;
+                        Debug.Log("Finished spawning for the day");
+                        break;
+                    }
                     SpawnNPC();
+                    // Exit the inner while loop to recheck conditions
                 }
 
             }
         }
+        while (npcs.Count > 0)
+        {
+            yield return new WaitForSeconds(5f); // Wait for 1 second before checking again
+        }
+        // Transition to night or reset for next day
+        if (currentTime == timeOfDay.Day)
+        {
+            currentTime = timeOfDay.Night;
+            Debug.Log("Transitioning to Night");
+            // Additional night-time logic here
+            dayNightButton.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("NPC management ended but it is already night. This should not happen.");
+        }
 
+    }
+    void IButtonInteractor.Activate()
+    {
+        if (currentTime == timeOfDay.Night)
+        {
+            day++;
+            currentTime = timeOfDay.Day;
+            Debug.Log("Starting Day " + day);
+            //Edit math to make days not get too crazy long
+            npcsToday = Mathf.RoundToInt(startingNPCs * Mathf.Pow(NPCsScaleFactor, day));
+            //Edit math to make NPCs not get too crazy hard
+            difficultyScale *= day;
+            todayNPCsSpawned = 0;
+            spawning = true;
+            dayNightButton.SetActive(false);
+
+            StartCoroutine(NPCManagment()); // Restart managing NPCs for the new day
+        }
+        else
+        {
+            Debug.LogError("Day/Night button activated but it is already day. This should not happen.");
+        }
     }
 }

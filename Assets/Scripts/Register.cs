@@ -16,6 +16,10 @@ public class Register : MonoBehaviour, IButtonInteractor
     public TextMeshProUGUI valueText;
     public int totalValue;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip registerOpenSound;
+    public AudioClip registerCloseSound;
     [Header("debug")]
     public bool process;
     public bool openDrawer;
@@ -57,6 +61,7 @@ public class Register : MonoBehaviour, IButtonInteractor
         if (drawer.isLocked)
         {
             drawer.ReleaseDrawer(); // Call the ReleaseDrawer method to open the drawer
+            audioSource.PlayOneShot(registerOpenSound);
             // isOpen = true; // Set isOpen to true
             // closed = false; // Set closed to false
         }

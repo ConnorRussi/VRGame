@@ -18,11 +18,14 @@ public class NPC : MonoBehaviour
     public bool isDead;
     public int currhealth;
     public int bulletDamage; // Damage taken from a bullet
+    public GameObject CoinPrefab;
+    
     [Header("Anger Properties")]
     public float angerLevel;
     public float angerCap;
     public bool isHostile;
     public bool hostileStateSet;
+    public float angerIncrement;
     [Header("Order Properties")]
     public Slider angerSlider;
     public struct Order
@@ -35,6 +38,7 @@ public class NPC : MonoBehaviour
     public GameObject lemonMark, CherryMark, IceMark;
     public Image drinkImage, cupImage;
     public GameObject orderHolder;
+    
 
 
     [Header("Revolver Properties")]
@@ -76,6 +80,7 @@ public class NPC : MonoBehaviour
         //Set path for npc to walk (enter and exit path)
         angerSlider.value = 1.0f; // Set the anger slider to max value
         npcPathFinding = GetComponent<NPCPathFinding>();
+        angerIncrement *= gameManager.difficultyScale;
 
     }
     /// <summary>
@@ -88,7 +93,7 @@ public class NPC : MonoBehaviour
             yield return new WaitForFixedUpdate();
             if (!hostileStateSet)
             {
-                angerLevel += Time.deltaTime * defaults.angerIncrement;
+                angerLevel += Time.deltaTime * angerIncrement;
                 if (angerCap <= 0) Debug.LogError("Anger cap is less than or equal to zero, this should not happen.");
                 angerSlider.value = 1 - Mathf.Clamp01(angerLevel / angerCap); // Update the slider value based on anger level
                 if (angerLevel >= angerCap && !isHostile)
@@ -160,17 +165,11 @@ public class NPC : MonoBehaviour
         bool lemonMatch = cup.lemon == myOrder.lemon;
         bool tagMatch = tag == myOrder.drink.cupType.ToString();
         bool colorMatch = ColorsAreClose(cup.drinkRenderer.material.color, myOrder.drink.color);
-
-        if (iceMatch && cherryMatch && lemonMatch && tagMatch && colorMatch)
+        bool filledEnough = cup.currDrinkHeight >= drinkDataBase.fillThreshold; // Check if the cup is filled enough
+        if (iceMatch && cherryMatch && lemonMatch && tagMatch && colorMatch && filledEnough)
         {
-            Debug.Log("The drink matches the NPC's order.");
-            // Logic for when the drink matches the order
-            cupObject.GetComponent<CInteractable>().Break();
-            //set to leave and have leave on path
-            isPathing = true;
-            isHostile = false;
-            orderHolder.SetActive(false); // Hide the order holder UI
-            StartCoroutine(npcPathFinding.PathFindOut());
+            AcceptDrink(cupObject, cup);
+
         }
         else
         {
@@ -180,11 +179,26 @@ public class NPC : MonoBehaviour
             if (!lemonMatch) Debug.Log($"Mismatch: lemon (Cup: {cup.lemon}, Order: {myOrder.lemon})");
             if (!tagMatch) Debug.Log($"Mismatch: cup type/tag (Cup: {tag}, Order: {myOrder.drink.cupType})");
             if (!colorMatch) Debug.Log($"Mismatch: color (Cup: {cup.drinkRenderer.material.color}, Order: {myOrder.drink.color})");
+            if(!filledEnough) Debug.Log($"Mismatch: filled enough (Cup height: {cup.currDrinkHeight}, Required: {drinkDataBase.fillThreshold})");
             Debug.Log("The drink does not match the NPC's order.");
             // Logic for when the drink does not match the order
             angerLevel += defaults.wrongDrinkIncrement;
 
         }
+    }
+    void AcceptDrink(GameObject cupObject, Cup cup) {
+            Debug.Log("The drink matches the NPC's order.");
+            // Logic for when the drink matches the order
+            cupObject.GetComponent<CInteractable>().Break();
+            //give coins, set up for different coin amounts later EX: diff colors for diff values
+            GameObject currCoin = Instantiate(CoinPrefab, coaster.GetComponent<Coaster>().spawnPoint.transform.position, Quaternion.identity);
+            currCoin.GetComponent<CInteractable>().coinValue = (int)Math.Round(myOrder.drink.basePrice * (angerLevel/angerCap)) + defaults.iceValue + defaults.cherryValue + defaults.lemonValue;
+            //set to leave and have leave on path
+            isPathing = true;
+            isHostile = false;
+            orderHolder.SetActive(false); // Hide the order holder UI
+
+            StartCoroutine(npcPathFinding.PathFindOut());
     }
     /// <summary>
     /// Checks if two colors are close enough to be considered a match.
@@ -348,7 +362,13 @@ public class NPC : MonoBehaviour
     public void Die()
     {
         Debug.Log(gameObject.name + " NPC has died.");
-        coaster.GetComponent<Coaster>().releaseCoaster();
+        //forces wait until released before death
+        bool released = coaster.GetComponent<Coaster>().releaseCoaster();
+        //NOT REALEASING NAV POINTS BEFORE DEATH
+        if (!released)
+        {
+            Debug.LogWarning("Failed to release coaster on NPC death: " + gameObject.name);
+        }
         isDead = true;
         if (revolver != null)
         {
