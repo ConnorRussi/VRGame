@@ -28,6 +28,7 @@ public class Register : MonoBehaviour, IButtonInteractor
     void Awake()
     {
         drawer = registerDrawer.GetComponent<Drawer>(); // Get the Drawer component attached to the same GameObject
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
     public void Update()
     {
@@ -49,13 +50,13 @@ public class Register : MonoBehaviour, IButtonInteractor
             close = false; // Reset close to false after closing
         }
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("bullet"))
-        {
-                OpenRegister();
-        }
-    }
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.layer == LayerMask.NameToLayer("bullet"))
+    //     {
+    //             OpenRegister();
+    //     }
+    // }
     public void OpenRegister()
     {
         if (drawer.isLocked)
@@ -92,13 +93,16 @@ public class Register : MonoBehaviour, IButtonInteractor
             // Optionally filter by tag/layer/component
             itemsToProcess.Push(col.gameObject);
             totalValue = col.GetComponent<CInteractable>().coinValue + totalValue;
-            valueText.text = "$" + totalValue.ToString();
+            UpdateRegScreen();
             Destroy(col.gameObject, 1f); // destroy after 2 seconds
         }
 
         Debug.Log($"Found {itemsToProcess.Count} items in the register area.");
     }
-    
+    public void UpdateRegScreen()
+    {
+        valueText.text = "$" + totalValue.ToString();
+    }
      // Draw the box in the Scene view for easy tweaking
     void OnDrawGizmosSelected()
     {

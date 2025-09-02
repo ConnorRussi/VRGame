@@ -22,7 +22,7 @@ public class NavPoint : MonoBehaviour
                 }
             }
         }
-        Debug.Log("SpawnPoint claimed by: " + owner.name);
+        //Debug.Log("SpawnPoint claimed by: " + owner.name);
     }
     public bool release()
     {
