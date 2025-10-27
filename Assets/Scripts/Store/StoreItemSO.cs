@@ -7,5 +7,6 @@ public class StoreItemSO : ScriptableObject
     public GameObject prefab;
     public int cost;
     public bool topItem; // True if this item should spawn in the top row
+    public LayerMask interactableLayer;
     //public Sprite icon;
 }

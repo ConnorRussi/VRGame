@@ -124,7 +124,7 @@ public class RevolverShoot : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Interactor does not have a recognized tag.");
+                Debug.LogWarning("Interactor: " + args.interactorObject + " does not have a recognized tag.");
             }
             grabbingXRController = interactorObj.GetComponent<ActionBasedController>();
             if(debug)Debug.Log("Grabbed by: " + interactorObj.name);

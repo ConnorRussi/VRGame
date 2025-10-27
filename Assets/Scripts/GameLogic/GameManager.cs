@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
     //public List<GameObject> glassSpawns;
     public bool onDelays = false; // Flag to control the delay before respawning
     public float checkDelay; // Delay in seconds between checks for existing objects
+    public Register register; // Reference to the register
     [Header("day and night cycle")]
     public int day;
     public enum timeOfDay { Day, Night };
@@ -23,7 +24,10 @@ public class GameManager : MonoBehaviour, IButtonInteractor
     public int todayNPCsSpawned;
     public GameObject dayNightButton;
     public float difficultyScale = 0.3f; // How much to scale the difficulty by each day
-    //CHANGE
+                                         //CHANGE
+    public GameObject storePrefab;
+    public Transform storeSpawnPoint;
+    public Store store;
 
 
 
@@ -55,6 +59,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
 
     void Awake()
     {
+       
         FindAllCoasters();
         CollectSockets(MugSpawnHolder, MugPrefab, mugSockets);
         CollectSockets(GlassSpawnHolder, glassPrefab, shotGlassSockets);
@@ -87,7 +92,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
             coaster.GetComponent<Coaster>().gameManager = this; // Set the GameManager reference in each coaster
             coaster.GetComponent<Coaster>().wrapper.SetActive(false); // Deactivate all coasters initially
         }
-        Debug.Log("all coasters turned off");
+       // Debug.Log("all coasters turned off");
     }
     /// <summary>
     /// Assigns an unclaimed coaster to the NPC.
@@ -97,7 +102,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
     /// <param name="npc"></param>
     public GameObject assignCoaster(GameObject npc)
     {
-        Debug.Log("claiming a coaster for " + npc.name);
+        //Debug.Log("claiming a coaster for " + npc.name);
         //*****&Later if want to save some performance can use a order of coasters to assign instead of random
         if (coasters.Count == 0)
         {
@@ -121,61 +126,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
         StartCoroutine(npcPathFinding.PathFindIn());
         return chosenCoaster; // Return the assigned coaster
     }
-    // void FindAllSpawns(GameObject spawnHolder, GameObject prefab, SocketInfo[] socketInfos)
-    // {
-    //     foreach (Transform child in spawnHolder.transform)
-    //     {
-    //         socketInfos.Add(child.gameObject);
-    //         if (prefab == null) continue; // Skip if no prefab is provided for bottles
-    //         Instantiate(prefab, child.position, child.rotation);
-    //     }
-    // }
-    // void SpawnBottles()
-    // {
-    //     for (int i = 0; i < bottleSpawns.Count; i++)
-    //     {
-    //         if (i < bottles.Count)
-    //         {
-    //             Instantiate(bottles[i], bottleSpawns[i].transform.position, bottleSpawns[i].transform.rotation);
-    //         }
-    //         else
-    //         {
-    //             Debug.LogWarning("Not enough bottles to spawn at all bottle spawns.");
-    //             break;
-    //         }
-    //     }
-    // }
-    // public void RespawnObject(GameObject spawnPoint, GameObject prefab)
-    // {
-    //     //yield return new WaitForSeconds(5f); // Wait for 5 seconds before respawning
-    //     Instantiate(prefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
-    //     Debug.Log("Respawned object at: " + spawnPoint.name);
-    // }
-    // public System.Collections.IEnumerator CheckBottleRespawn()
-    // {
-    //     while (spawning)
-    //     {   
-    //         if(onDelays)
-    //         {
-    //             yield return new WaitForSeconds(checkDelay);
-    //             continue; // Skip the rest of the loop if on delay
-    //         }
-    //         foreach (GameObject bottleSpawn in bottleSpawns)
-    //         {
-    //         //    if (Vector3.Distance(bottleSpawn.transform.position, currentSpawnedObject.transform.position) < checkradius)
-    //         //     {
-    //         //         yield return new WaitForSeconds(checkDelay);
-    //         //         continue; // Skip the rest of the loop if an object is found
-    //         //     }
-    //         }
-
-    //         //spawn if the object is not found
-    //         onDelays = true; // Set the delay flag to prevent immediate respawning
-    //         //SpawnObject();
-    //         yield return new WaitForSeconds(checkDelay);
-
-    //     }
-    // }
+   
     void CollectSockets(GameObject spawnHolder, GameObject prefab, List<SocketInfo> socketList)
     {
         foreach (Transform child in spawnHolder.transform)
@@ -249,21 +200,21 @@ public class GameManager : MonoBehaviour, IButtonInteractor
         GameObject npc = Instantiate(npcPrefab, npcSpawnPoint.transform.position, Quaternion.identity);
         npc.GetComponent<NPC>().gameManager = this; // Set the GameManager reference in each NPC
         npcs.Add(npc);
-        Debug.Log("Spawned NPC: " + npc.name);
+        //Debug.Log("Spawned NPC: " + npc.name);
 
 
 
     }
     System.Collections.IEnumerator NPCManagment()
     {
-        Debug.Log("Starting NPC management");
+        //Debug.Log("Starting NPC management");
         while (spawning)
         {
             yield return new WaitForSeconds(1f); // Wait for 1 second before checking again
-            Debug.Log("spawning");
+            //Debug.Log("spawning");
             while (npcs.Count < maxNPC)
             {
-                Debug.Log("not at max count");
+                //Debug.Log("not at max count");
                 yield return new WaitForSeconds(Random.Range(minNpcSpawnDelay, maxNpcSpawnDelay)); // Wait for __ seconds before spawning a new NPC
                 if (!npcSpawnPoint.GetComponent<NavPoint>().claimed && unclaimedCoasters.Count > 0) // Check if the spawn point is not claimed and there are unclaimed coasters
                 {
@@ -271,7 +222,7 @@ public class GameManager : MonoBehaviour, IButtonInteractor
                     if (todayNPCsSpawned > npcsToday && currentTime == timeOfDay.Day)
                     {
                         spawning = false;
-                        Debug.Log("Finished spawning for the day");
+                        //Debug.Log("Finished spawning for the day");
                         break;
                     }
                     SpawnNPC();
@@ -288,9 +239,10 @@ public class GameManager : MonoBehaviour, IButtonInteractor
         if (currentTime == timeOfDay.Day)
         {
             currentTime = timeOfDay.Night;
-            Debug.Log("Transitioning to Night");
+            //Debug.Log("Transitioning to Night");
             // Additional night-time logic here
             dayNightButton.SetActive(true);
+            SpawnStore();
         }
         else
         {
@@ -304,13 +256,15 @@ public class GameManager : MonoBehaviour, IButtonInteractor
         {
             day++;
             currentTime = timeOfDay.Day;
-            Debug.Log("Starting Day " + day);
+            //Debug.Log("Starting Day " + day);
             //Edit math to make days not get too crazy long
             npcsToday = Mathf.RoundToInt(startingNPCs * Mathf.Pow(NPCsScaleFactor, day));
             //Edit math to make NPCs not get too crazy hard
             difficultyScale *= day;
             todayNPCsSpawned = 0;
             spawning = true;
+            store.CloseShop();
+            store = null;
             Invoke("turnOffDayButton", 3f); // Hide the day/night button after a short delay
 
             StartCoroutine(NPCManagment()); // Restart managing NPCs for the new day
@@ -323,5 +277,11 @@ public class GameManager : MonoBehaviour, IButtonInteractor
     public void turnOffDayButton()
     {
         dayNightButton.SetActive(false);
+    }
+    void SpawnStore()
+    {
+        if (store != null) Debug.LogError("Spawning a new store but there is already a store");
+        store = Instantiate(storePrefab, storeSpawnPoint).GetComponent<Store>();
+        
     }
 }

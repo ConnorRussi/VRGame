@@ -306,6 +306,10 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   store: {fileID: 0}
+  itemIndex: 0
+  inStore: 0
+  interactAbleLayer:
+    m_Bits: 2
 --- !u!1 &6945819953450651809
 GameObject:
   m_ObjectHideFlags: 0

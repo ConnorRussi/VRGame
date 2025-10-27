@@ -51,7 +51,7 @@ public class NPCPathFinding : MonoBehaviour
                 {
                     path[currentWaypointIndex].GetComponent<NavPoint>().release(); // Release the waypoint if it was claimed
                 }
-                Debug.Log("Reached waypoint: " + currentWaypointIndex + " " + path[currentWaypointIndex].name);
+                //Debug.Log("Reached waypoint: " + currentWaypointIndex + " " + path[currentWaypointIndex].name);
                 currentWaypointIndex++;
                 if (currentWaypointIndex >= path.Length)
                 {
@@ -110,7 +110,7 @@ public class NPCPathFinding : MonoBehaviour
 
 
     public void ForceReleaseNavPoints()
-    {   Debug.Log("Force releasing nav points for NPC: " + gameObject.name);
+    {   //Debug.Log("Force releasing nav points for NPC: " + gameObject.name);
         if (currentWaypointIndex < path.Length && currentWaypointIndex >= 0)
         {
             NavPoint point = path[currentWaypointIndex].GetComponent<NavPoint>();

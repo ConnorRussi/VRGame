@@ -56,7 +56,7 @@ public class Drawer : MonoBehaviour
 
             if (distance < closeThreshold && !isOpening)
             {
-                Debug.Log("Closing drawer");
+               // Debug.Log("Closing drawer");
 
                 if (joint != null)
                 {
@@ -76,7 +76,7 @@ public class Drawer : MonoBehaviour
 
     public void ReleaseDrawer()
     {
-        Debug.Log("Releasing drawer");
+        //Debug.Log("Releasing drawer");
         if (regDrawer)
         {
             isOpening = true;
@@ -111,7 +111,7 @@ public class Drawer : MonoBehaviour
     public void LockDrawer()
     {
         
-        Debug.Log("Locking drawer");
+        //Debug.Log("Locking drawer");
         register.audioSource.PlayOneShot(register.registerCloseSound);
         // snap back into place
         transform.localPosition = closedLocalPos;

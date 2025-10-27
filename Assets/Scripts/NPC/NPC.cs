@@ -134,7 +134,7 @@ public class NPC : MonoBehaviour
         //int drinkIndex = 0;
         myOrder = new Order();
         myOrder.drink = drinkDataBase.drinkList[drinkIndex];
-        Debug.Log("drink base index: " + drinkIndex);
+       // Debug.Log("drink base index: " + drinkIndex);
         myOrder.ice = myOrder.drink.iceAllowed && Random.Range(0, 2) == 0; // 50% chance to have ice
         myOrder.cherry = myOrder.drink.cherryAllowed && Random.Range(0, 2) == 0; // 50% chance to have cherry
         myOrder.lemon = myOrder.drink.lemonAllowed && Random.Range(0, 2) == 0; // 50% chance to have lemon
@@ -366,7 +366,7 @@ public class NPC : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log(gameObject.name + " NPC has died.");
+        //Debug.Log(gameObject.name + " NPC has died.");
         //forces wait until released before death
         if (coaster != null)
         {
